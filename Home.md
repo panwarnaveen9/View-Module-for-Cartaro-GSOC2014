@@ -1,1 +1,1 @@
-Welcome to the View-Module-for-Cartaro-GSOC2014 wiki!
+Welcome to the View Module for Cartaro GSOC-2014 wiki!
