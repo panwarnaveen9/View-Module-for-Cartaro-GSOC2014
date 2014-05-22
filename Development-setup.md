@@ -19,5 +19,6 @@ PHP Version => 5.3.10-1ubuntu3.11
 
 ***
 
-I am building the PostGIS-2.1 from the source. If any problem comes I will let you know.
-after that I think, I have to reinstall the Cartaro. 
+**Important thing noted during cartaro installation that we have to build PostGIS from source as a part of prerequisite.** 
+
+PostGIS Source URL - http://trac.osgeo.org/postgis/wiki/UsersWikiInstall 
