@@ -16,7 +16,7 @@
 
 **Things to do next week**
 * Prepare the list of functionalities which were already there and which we are going to provide the user for queries.
-* Write down/ Draw technical design document. 
+* Write down and Draw technical design document. 
 
 **Important URLs**
 * Repository URL - [https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014)
