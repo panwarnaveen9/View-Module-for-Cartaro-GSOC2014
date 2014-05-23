@@ -12,7 +12,7 @@
 **Learning**
 * We must build the PostGIS 1.5 + from source before cartaro installation.
 * The name of the new User-Group Service should be the same that the **Geo-server Workspace name** that you choose when installing Cartaro.
-* Enable PostGIS extension in PostgreSQL database with cartaro user as an owner.  
+* Enable PostGIS extension in PostgreSQL database with cartaro user as owner.  
 
 **Things to do next week**
 * Prepare the list of functionalities which were already there and which we are going to provide the user for queries.
