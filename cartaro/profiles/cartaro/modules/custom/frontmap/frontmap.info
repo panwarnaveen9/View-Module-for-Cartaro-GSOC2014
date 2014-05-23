@@ -1,0 +1,9 @@
+name = Frontmap
+description = Extends OpenLayers with some Cartaro-specific features.
+core = 7.x
+; Information added by Drupal.org packaging script on 2014-01-20
+version = "7.x-1.2"
+core = "7.x"
+project = "cartaro"
+datestamp = "1390210705"
+
