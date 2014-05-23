@@ -1,6 +1,6 @@
 Setup of the development machine
 
-# Software versions
+## Software versions
 
 * OS: Ubuntu 12.04 (LTS)
 * PostgreSQL: 9.1
