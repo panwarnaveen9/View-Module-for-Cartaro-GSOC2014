@@ -4,7 +4,7 @@
 
 **Things, I have done this week**
 * Finish the proper installation of the Cartaro, tomcat7, geo-server, php, PostgreSQL.
-* Build PostGIS 2.1 from source.
+* Building latest version of PostGIS (i.e 2.1) from source.
 * Configure Geo-Server which used to provide layers via Web Feature Service (WFS) and Web Map Service (WMS) to Cartaro. 
 * Adding new content type and geometric field to cartaro.
 * Configure OpenLayers to activate your GeoServer layer in a cartaro map and add Geo-spatial content.
