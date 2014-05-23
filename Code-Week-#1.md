@@ -2,7 +2,7 @@
 
 **Aim** - The task in hand was to learn and understand the Cartao and POSTGIS module functionalities. Also get  familiarize with Content type and Geometric field in Cartao.   
 
-**Things I have done this week**
+**Things, I have done this week**
 * Finish the proper installation of the Cartaro, tomcat7, geo-server, php, PostgreSQL.
 * Build PostGIS 2.1 from source.
 * Configure Geo-Server which used to provide layers via Web Feature Service (WFS) and Web Map Service (WMS) to Cartaro. 
