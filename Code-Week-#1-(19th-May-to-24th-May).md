@@ -17,5 +17,6 @@
 * Write down/ Draw technical design document. 
 
 **Important URLs**
-*
-*
+* Development setup - [https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/wiki/Development-setup](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/wiki/Development-setup)
+* Geo-Server Configuration - [http://cartaro.org/documentation/using-drupal-users-and-roles-geoserver](http://cartaro.org/documentation/using-drupal-users-and-roles-geoserver)
+* PostGIS building on Ubuntu - [http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21Ubuntu1204src](http://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21Ubuntu1204src)
