@@ -1,15 +1,14 @@
-
-Name
+**Name**
 
 
 Naveen Panwar<br>
 <br>
-Country
+**Country**
 
 
 India<br>
 <br>
-School and Degree
+**School and Degree**
 
 
 International Institute of Information Technology, Hyderabad, India.
@@ -22,9 +21,9 @@ B.Tech. in Computer Science + MS by research in Spatial Informatics.
 Email
 
 
-[[panwarnaveen9@gmail.com]] <br>
+panwarnaveen9@gmail.com<br>
 <br>
-Phone
+**Phone**
 
 
 +91-9030736015<br>
@@ -34,13 +33,12 @@ OSGeo project(s)
 
 Cartaro <br>
 <br>
-Title:
+**Title:**
 
 
 Add PostGIS spatial query support for the views module in Cartaro.
 
-
-Describe your idea --<br>
+**Describe your idea** --<br>
 
 
 1. Introduction
