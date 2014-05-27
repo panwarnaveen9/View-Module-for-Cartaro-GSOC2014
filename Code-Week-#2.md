@@ -12,7 +12,7 @@
 
 **Things to do next week**
 * Prepare the list of functionalities which were already there and which we are going to provide the user for queries.
-* Write down and Draw technical design document. 
+* 2 
 
 **Important URLs**
 * PostGIS Module URL - [https://drupal.org/project/postgis](https://drupal.org/project/postgis)
