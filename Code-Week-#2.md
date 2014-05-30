@@ -5,8 +5,8 @@
 **Aim** - Understand the module development in drupal and go through all related modules.
 
 **Things, I have done this week**
-* Study the [spatial relation functions](http://postgis.net/docs/manual-2.0/reference.html#Spatial_Relationships_Measurements) which are available in PostGIS.
-* Understand the already available **modules's code** which are as follow:
+* Study the [spatial relation functions](http://postgis.net/docs/manual-2.0/reference.html#Spatial_Relationships_Measurements) which are available in PostGIS for query.
+* Understand following modules's code:
        * View Module[1]
        * Geofield Module[2]
        * PostGIS Module[3]
