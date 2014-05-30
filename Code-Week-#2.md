@@ -6,7 +6,7 @@
 
 **Things, I have done this week**
 * Study the [spatial relation functions](http://postgis.net/docs/manual-2.0/reference.html#Spatial_Relationships_Measurements) which are available in PostGIS for query.
-* Understand following modules's code:
+* Understand the following modules's code:
        * View Module[1]
        * Geofield Module[2]
        * PostGIS Module[3]
