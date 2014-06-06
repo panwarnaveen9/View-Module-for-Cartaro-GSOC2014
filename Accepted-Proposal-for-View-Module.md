@@ -16,8 +16,6 @@ International Institute of Information Technology, Hyderabad, India.
 
 B.Tech. in Computer Science + MS by research in Spatial Informatics.
 
-
-<br>
 **Email**
 
 
