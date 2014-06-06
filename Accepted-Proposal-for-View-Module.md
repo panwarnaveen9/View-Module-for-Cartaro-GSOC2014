@@ -18,7 +18,7 @@ B.Tech. in Computer Science + MS by research in Spatial Informatics.
 
 
 <br>
-Email
+**Email**
 
 
 panwarnaveen9@gmail.com<br>
