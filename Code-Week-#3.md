@@ -15,12 +15,12 @@
     2. View Module - Build the spatial query, execute the query, get the data and pass it to OpenLayers using handler.
     3. OpenLayers    
 
-**Technical Design for Module (folder structure)** -
+**Technical Design for Module (folder structure and class description)** -
 * **postgis/** -
   * postgis.openlayers.inc - Provides hooks for integration with OpenLayers.
 
 * **postgis/views/** -
-  * postgis.views.inc - Hooks for views integration. An class that contain all of the data to generate a view, plus the member functions to build the view query, execute the query and render the output.
+  * postgis.views.inc - Hooks for views integration. A class that contain all of the data to generate a view, plus the member functions to build the view query, execute the query and render the output.
   * postgis_views_handler_filter_geometry.inc - Provide filter for geo-spatial data.  
 
 * **postgis/views/handlers/** - 
@@ -29,8 +29,8 @@
 **Things to do next week**
 * . 
 
-**Important URLs**
-* 
+**Reference Modules**
+* GeoField - [https://drupal.org/project/geofield](https://drupal.org/project/geofield)
 
 **Am I blocked on anything ?**
 
