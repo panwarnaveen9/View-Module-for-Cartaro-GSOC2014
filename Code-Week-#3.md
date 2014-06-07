@@ -24,14 +24,17 @@
   * postgis_views_handler_filter_geometry.inc - Provide filter for geo-spatial data.  
 
 * **postgis/views/handlers/** - 
-  * Implement all handlers which are needed. like: sort, field, argument proximity, filter etc.  
+  * Implement all handlers which are needed. like: sort, field, argument proximity, filter etc.
+
+* **Available filter** -  
+  * 'ST_Contains', 'ST_Intersects', 'ST_Disjoint'
 
 **Things to do next week**
 * . 
 
 **Reference Modules**
-* GeoField - [https://drupal.org/project/geofield](https://drupal.org/project/geofield)
+* Geofield - [https://drupal.org/project/geofield](https://drupal.org/project/geofield)
 
 **Am I blocked on anything ?**
 
-No
+No, 
