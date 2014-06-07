@@ -2,7 +2,7 @@
 
 ***
 
-**Aim** - Prepare for the technical design pipeline of PostGIS view module.
+**Aim** - Prepare the technical design pipeline for PostGIS view module.
 
 **Things, I have done this week**
 * Understood the current implementation of geometric field display in Cartaro.
