@@ -33,7 +33,9 @@
   * /plugins/geoserver/layer_types/geoserver_layer_type_postgis_field.inc - GeoServer layer type for PostGIS fields. [Contain select query]
 
 **Things to do next week**
-* . 
+* Working on relationship plugin.
+* Understand how exactly view module query on Postgres DB and pass the result to OpenLayers. 
+
 
 **Reference Modules/Files** - 
 * Geofield - [https://drupal.org/project/geofield](https://drupal.org/project/geofield)
@@ -43,8 +45,6 @@
   * /handlers/geofield_handler_argument_proximity.inc
 * View - [https://drupal.org/project/views](https://drupal.org/project/views)
   * view.inc
-
-
 
 **Am I blocked on anything ?**
 
