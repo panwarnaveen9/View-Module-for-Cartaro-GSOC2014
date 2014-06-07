@@ -15,14 +15,16 @@
     2. View Module - Build the spatial query, execute the query, get the data and pass it to OpenLayers using handler.
     3. OpenLayers    
 
-**Technical Design for Module** - 
+**Technical Design for Module (folder structure)** -
+* **postgis/** -
+  * postgis.openlayers.inc - Provides hooks for integration with OpenLayers.
+
 * **postgis/views/** -
-  * postgis.views.inc - Hooks for Views integration. 
-  * postgis_views_handler_filter_geometry.inc - Provide filter for geo-spatial data. 
-  * postgis.openlayers.inc - Provides hooks for integration with OpenLayers. 
+  * postgis.views.inc - Hooks for views integration. An class that contain all of the data to generate a view, plus the member functions to build the view query, execute the query and render the output.
+  * postgis_views_handler_filter_geometry.inc - Provide filter for geo-spatial data.  
 
 * **postgis/views/handlers/** - 
-
+  * Implement all handlers which are needed. like: sort, field, argument proximity, filter etc.  
 
 **Things to do next week**
 * . 
