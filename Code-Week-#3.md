@@ -29,12 +29,23 @@
 * **Available filter** -  
   * 'ST_Contains', 'ST_Intersects', 'ST_Disjoint'
 
+* **Plugin** - 
+  * /plugins/geoserver/layer_types/geoserver_layer_type_postgis_field.inc - GeoServer layer type for PostGIS fields. [Contain select query]
+
 **Things to do next week**
 * . 
 
-**Reference Modules**
+**Reference Modules/Files** - 
 * Geofield - [https://drupal.org/project/geofield](https://drupal.org/project/geofield)
+  * geofield.views.inc
+  * geofield.openlayers.inc
+  * /handlers/geofield_handler_filter.inc
+  * /handlers/geofield_handler_argument_proximity.inc
+* View - [https://drupal.org/project/views](https://drupal.org/project/views)
+  * view.inc
+
+
 
 **Am I blocked on anything ?**
 
-No, 
+No
