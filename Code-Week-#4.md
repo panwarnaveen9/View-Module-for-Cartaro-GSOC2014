@@ -1,4 +1,4 @@
-**Weekly Report (1st June to 7th June) -**
+**Weekly Report (8th June to 14th June) -**
 
 ***
 
@@ -14,6 +14,7 @@
 
 * **Plugin** - 
   * /plugins/geoserver/layer_types/geoserver_layer_type_postgis_field.inc - GeoServer layer type for PostGIS fields. [Contain select query]
+
 
 **Things to do next week**
 
