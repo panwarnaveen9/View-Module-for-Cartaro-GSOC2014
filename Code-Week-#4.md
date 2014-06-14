@@ -9,9 +9,12 @@
 * Worked on available code of spatial queries in Cartaro.
   * /supporting_module/postgis/views/postgis_views_handler_filter_geometry.inc
   * /supporting_module/postgis/postgis.test
-* Identify and ranked the Spatial functionality which we are going to provide the Cartaro's user in View module.
+
+* Identified and ranked the Spatial functionality which we are going to provide the Cartaro's user in View module.
+
 * **Available functions** -  
   * 'ST_Contains', 'ST_Intersects', 'ST_Disjoint'
+
 * **New relational functionality** -
   1. ST_Covers — Returns 1 (TRUE) if no point in Geometry B is outside Geometry A.
   2. ST_Equals — Returns true if the given geometries represent the same geometry. Directionality is ignored.
@@ -21,9 +24,12 @@
 
 **Things to do next week**
 
+* Write the ode to extract data for above functions.
+* Hooks the code with OpenLayers.  
 
 **Reference Modules/Files** - 
-
+Hooks for Views integration - /supporting_module/postgis/views/postgis.views.inc
 
 **Am I blocked on anything ?**
-No
+
+Yes, In this week I was struggling to reflect the sample changes of PostGIS view module in cartaro. I will discuss it with mentor/co-mentor and try to resolve it by this monday. 
