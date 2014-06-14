@@ -2,7 +2,7 @@
 
 ***
 
-**Aim** - Design the spatial relationship functions for the View Module.
+**Aim** - Design the spatial relationship functions for the module.
 
 **Things, I have done this week**
 
@@ -14,7 +14,7 @@
 * Identified and ranked the Spatial functionality which we are going to provide the Cartaro's user in View module.
 
 * **Available functions** -  
-  * 'ST_Contains', 'ST_Intersects', 'ST_Disjoint'
+  * ST_Contains, ST_Intersects, ST_Disjoint
 
 * **New relational functionality** -
   1. ST_Covers — Returns 1 (TRUE) if no point in Geometry B is outside Geometry A.
