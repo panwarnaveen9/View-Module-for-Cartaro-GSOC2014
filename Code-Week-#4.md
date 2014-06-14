@@ -6,7 +6,7 @@
 
 **Things, I have done this week**
 
-* Worked on available code of spatial queries in Cartaro.
+* Worked on available code for spatial queries in Cartaro.
 
   * /supporting_module/postgis/views/postgis_views_handler_filter_geometry.inc
   * /supporting_module/postgis/postgis.test
@@ -16,7 +16,7 @@
 * **Available functions** -  
   * ST_Contains, ST_Intersects, ST_Disjoint
 
-* **New relational functionality** -
+* **New relational functionalities** -
   1. ST_Covers — Returns 1 (TRUE) if no point in Geometry B is outside Geometry A.
   2. ST_Equals — Returns true if the given geometries represent the same geometry. Directionality is ignored.
   3. ST_Touches — Returns TRUE if the geometries have at least one point in common, but their interiors do not intersect.
@@ -25,8 +25,8 @@
 
 **Things to do next week**
 
-* Write the ode to extract data for above functions.
-* Hooks the code with OpenLayers.  
+* Write the code to provide above functionalities.
+* Implement OpenLayers hooks for code.  
 
 **Reference Modules/Files** - 
 
