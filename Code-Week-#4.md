@@ -2,11 +2,12 @@
 
 ***
 
-**Aim** - Design the spatial relation functions for the View Module.
+**Aim** - Design the spatial relationship functions for the View Module.
 
 **Things, I have done this week**
 
 * Worked on available code of spatial queries in Cartaro.
+
   * /supporting_module/postgis/views/postgis_views_handler_filter_geometry.inc
   * /supporting_module/postgis/postgis.test
 
