@@ -14,6 +14,9 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
   var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint');
 
+  /*var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Equals', 'ST_Touches', 'ST_Within',
+	'ST_Overlaps' );*/
+
   function option_definition() {
 
     $options = parent::option_definition();
@@ -38,6 +41,11 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
         'ST_Contains' => t('Contains'), 
         'ST_Intersects' => t('Intersects'), 
         'ST_Disjoint' => t('Disjoint'),
+        /*'ST_Covers' => t('Covers'),
+        'ST_Equals' => t('Equals'),
+        'ST_Touches' => t('Touches'),
+        'ST_Within' => t('Within'),
+        'ST_Overlaps' => t('Overlaps'), */
       ),
       '#description' => t('This will be the way the relationship is determined.'),
       '#default_value' => $this->options['operation'] ? $this->options['operation'] : 'ST_Contains',
