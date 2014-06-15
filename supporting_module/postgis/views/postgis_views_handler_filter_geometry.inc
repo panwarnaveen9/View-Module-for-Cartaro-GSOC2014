@@ -14,6 +14,10 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
   /*var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint'); */
 
+  /* Name of all spatial functions which we implemented in cartaro. These names must be same as per PostGIS guideline. */
+
+  /* Also add these names in value_form function. */
+  
   var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Equals', 'ST_Touches', 'ST_Within',
 	'ST_Overlaps' );
 
