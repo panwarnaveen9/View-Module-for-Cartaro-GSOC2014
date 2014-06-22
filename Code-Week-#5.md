@@ -10,8 +10,11 @@
 * Worked on Views configuration UI.
 * Customized the format(content/field) in Views.
 * Configured and tested the different criteria under filter and sort of Views.
-*  
-
+* Understand the different terminology of Views interface which as follow -
+  * Display
+  * Filter
+  * Content versus Fields 
+  * Pager 
 
 * **New relational functionalities** -
   1. ST_Covers — Returns 1 (TRUE) if no point in Geometry B is outside Geometry A.
