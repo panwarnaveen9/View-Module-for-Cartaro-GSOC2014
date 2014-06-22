@@ -35,4 +35,4 @@
 
 **Am I blocked on anything ?**
 
-No. But I think, we need to implement functionality to take input for Geometry B via Forms. 
+No. But I think, we need to implement functionality to take inputs for Geometry B via Forms. 
