@@ -10,10 +10,11 @@
 * Worked on Views configuration UI.
 * Customized the format(content/field) in Views.
 * Configured and tested the different criteria under filter and sort of Views.
-* Understand the different terminology of views interface which as follow
-
- 
-
+* Understand the different terminology of Views interface which as follow
+  * Display
+  * Filter
+  * Content versus Fields 
+  * Pager 
 * **New relational functionalities** -
   1. ST_Covers — Returns 1 (TRUE) if no point in Geometry B is outside Geometry A.
   2. ST_Equals — Returns true if the given geometries represent the same geometry. Directionality is ignored.
@@ -27,7 +28,7 @@
 * Test and implement the relational functions.  
 
 **Reference Modules/Files** - 
-
+* [1] Views terminology - (http://www.drupalgardens.com/documentation/views/terminology)[http://www.drupalgardens.com/documentation/views/terminology]
 
 **Am I blocked on anything ?**
 
