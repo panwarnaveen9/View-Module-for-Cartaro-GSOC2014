@@ -15,7 +15,7 @@
   * Filter
   * Content versus Fields 
   * Pager 
-  * Contextual filters
+  * **Contextual filters**
   * Exposed filters
 
 **Mentor Suggestions**
