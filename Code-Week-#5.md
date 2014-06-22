@@ -10,15 +10,22 @@
 * Worked on Views configuration UI.
 * Customized the format(content/field) in Views.
 * Configured and tested the different criteria under filter and sort of Views.
-* Understand the different terminology of Views interface which as follow
+* Understood the different terminology of Views interface which are as follow
   * Display
   * Filter
   * Content versus Fields 
   * Pager 
-* 
+  * Contextual filters
+  * Exposed filters
+
+**Mentor Suggestions**
+
+* Most of spatial relationship operations required a second geometry B. Right now the PostGIS field only supports geometry B from contextual filters in Views.
+* We need to implement a simple WKT field in the PostGIS configuration mask for a manual geometry B input as an alternative to the contextual filter.
 
 **Things to do next week**
 
+* Understand the Form API and query functions customization in Views. 
 * Mid Term Evaluations.
 * Test and implement the relational functions.  
 
