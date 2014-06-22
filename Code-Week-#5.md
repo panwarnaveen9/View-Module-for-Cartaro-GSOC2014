@@ -6,7 +6,12 @@
 
 **Things, I have done this week**
 
-* Worked on available code for spatial queries in Cartaro.
+* Added new content type with geometric field in WKT(Well Known Text) format. 
+* Worked on Views configuration UI.
+* Customized the format(content/field) in Views.
+* Configured and tested the different criteria under filter and sort of Views.
+*  
+
 
 * **New relational functionalities** -
   1. ST_Covers — Returns 1 (TRUE) if no point in Geometry B is outside Geometry A.
