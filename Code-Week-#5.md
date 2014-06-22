@@ -28,7 +28,8 @@
 * Test and implement the relational functions.  
 
 **Reference Modules/Files** - 
-* [1] Views terminology - (http://www.drupalgardens.com/documentation/views/terminology)[http://www.drupalgardens.com/documentation/views/terminology]
+* Views terminology - [http://www.drupalgardens.com/documentation/views/terminology](http://www.drupalgardens.com/documentation/views/terminology)
+* Contextual filters -[https://www.drupal.org/node/1578558](https://www.drupal.org/node/1578558)
 
 **Am I blocked on anything ?**
 
