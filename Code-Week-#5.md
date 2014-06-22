@@ -8,7 +8,7 @@
 
 * Added new content type with geometric field in WKT(Well Known Text) format. 
 * Worked on Views configuration UI.
-* Customized the format(content/field) in Views.
+* Customized the format (content / field) in Views.
 * Configured and tested the different criteria under filter and sort of Views.
 * Understood the different terminology of Views interface which are as follow
   * Display
