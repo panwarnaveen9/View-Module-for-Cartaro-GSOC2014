@@ -2,7 +2,7 @@
 
 ***
 
-**Aim** - Implement the spatial relationship filter functions for the module.
+**Aim** - Implement the PostGIS spatial filter functions for the module.
 
 **Things, I have done this week**
 
