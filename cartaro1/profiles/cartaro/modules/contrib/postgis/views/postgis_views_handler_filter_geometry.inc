@@ -51,9 +51,9 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     );
 
     $form['geometry_B_wkt_data'] = array(
-      '#type' => 'textfield',
+      '#type' => 'textarea',
       '#title' => t('Geometry B'),
-      '#description' => t('Provide the geometry in WKT format'),
+      '#description' => t('Provide the geometry in WKT format.'),
       '#default_value' => t(''),
       '#required' => TRUE,
     );
@@ -103,12 +103,28 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     );
   }
 
+  function dvm($input, $name = NULL) {
+    if (user_access('access devel information')) {
+      $export = dprint_r($input, TRUE, $name, 'drupal_var_export', FALSE);
+      drupal_set_message($export);
+    }
+    return $input;
+  }
+
   function query() {
 
     $nid_arg = $this->view->display_handler->get_handler('argument', $this->options['value']['nid_arg']);
     if (empty($this->value) || empty($nid_arg) || !in_array($this->options['operation'], $this->operations)) {
       return;
     }
+    
+
+    $geometry_B_wkt = $this->options['value']['geometry_B_wkt_data'];
+    if(empty($geometry_B_wkt)){
+      return;
+    }
+    
+    dvm($geometry_B_wkt);
 
     $nid = $nid_arg->get_value();
     if (empty($nid)) {
