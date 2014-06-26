@@ -7,7 +7,7 @@
 **Things, I have done this week**
 
 * Worked on Views configuration UI.
-* Customized the format (content / field) in Views.
+* Customized the WKT input field in PostGIS Views.
 * Mid Term Evaluations.
 
 **Mentor Suggestions**
