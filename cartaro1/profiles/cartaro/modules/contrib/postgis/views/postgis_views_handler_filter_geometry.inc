@@ -50,6 +50,14 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
       '#default_value' => $this->options['operation'] ? $this->options['operation'] : 'ST_Contains',
     );
 
+    $form['geometry_B_wkt_data'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Geometry B'),
+      '#description' => t('Provide the geometry in WKT format'),
+      '#default_value' => t(''),
+      '#required' => TRUE,
+    );
+
     $form['origin'] = array(
       '#type' => 'select',
       '#title' => t('Origin'),
