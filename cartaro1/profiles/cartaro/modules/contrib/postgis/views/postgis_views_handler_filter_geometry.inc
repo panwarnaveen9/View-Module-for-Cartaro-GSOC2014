@@ -12,13 +12,9 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
   var $no_operator = TRUE;
 
-  /* Already present function in cartaro */
-  
-  /*var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint'); */
+  /*var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint');*/
 
-  /* Relational functionalities which we are going to provide*/
-  var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Equals', 'ST_Touches', 'ST_Within',
-	'ST_Overlaps' );
+  var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Equals', 'ST_Touches', 'ST_Within', 'ST_Overlaps' );
 
   function option_definition() {
 
@@ -34,9 +30,6 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
     return $options;
   }
-
-
-  /* Add the functions operations array too*/
 
   function value_form(&$form, &$form_state) {
 
