@@ -25,6 +25,7 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
       'default' => array(
         'nid_arg' => '',
         'nid_postgis_field' => '',
+        'geometry_B_wkt_data' => '',
       ),
     );
 
@@ -50,7 +51,7 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
       '#default_value' => $this->options['operation'] ? $this->options['operation'] : 'ST_Contains',
     );
 
-    $form['geometry_B_wkt_data'] = array(
+    $form['value']['geometry_B_wkt_data'] = array(
       '#type' => 'textarea',
       '#title' => t('Geometry B'),
       '#description' => t('Provide the geometry in WKT format.'),
@@ -75,6 +76,7 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
         $nid_arg_options[$id] = $handler->ui_name();
       }
     }
+
     $form['value']['nid_arg'] = array(
       '#type' => 'select',
       '#title' => t('Contextual filter'),
@@ -118,13 +120,14 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
       return;
     }
     
+    // Check whether the geometry field is empty or not.
 
     $geometry_B_wkt = $this->options['value']['geometry_B_wkt_data'];
     if(empty($geometry_B_wkt)){
       return;
     }
     
-    dvm($geometry_B_wkt);
+    // Check for value dvm($geometry_B_wkt);
 
     $nid = $nid_arg->get_value();
     if (empty($nid)) {
@@ -139,6 +142,10 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
     $where = "$operation((select $field_name from $table_name where entity_id = :nid), $this->table_alias.$field_geometry)";
 
-    $this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
+    //$this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
+
+    // Adding New Query. Copied from /views/views_handler_filter.inc
+    $this->query->add_where($this->options['group'], "$this->table_alias.$this->real_field", $this->value, $this->operator);
+
   }
 }
