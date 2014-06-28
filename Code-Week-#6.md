@@ -6,8 +6,8 @@
 
 **Things, I have done this week**
 
-* Worked on Views configuration UI.
-* Customized the WKT input field in PostGIS Views.
+* Worked on Drupal Form API and understand how to expose form.
+* Created new field with input type __textarea__ in geometric filter.
 * Mid Term Evaluations.
 
 **Mentor Suggestions**
