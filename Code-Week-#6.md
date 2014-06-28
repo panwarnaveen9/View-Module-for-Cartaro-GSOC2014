@@ -7,7 +7,7 @@
 **Things, I have done this week**
 
 * Worked on Drupal Form API and understand how to expose form.
-* Created new field with input type __textarea__ in geometric filter.
+* Created new field with input type --textarea-- in geometric filter.
 * Mid Term Evaluations.
 
 **Mentor Suggestions**
