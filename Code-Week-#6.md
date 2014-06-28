@@ -6,18 +6,22 @@
 
 **Things, I have done this week**
 
-* Worked on Drupal Form API and understand how to expose form.
-* Created new field with input type --textarea-- in geometric filter.
-* Mid Term Evaluations.
+* Worked on Drupal Form [API](https://api.drupal.org/api/drupal/developer!topics!forms_api_reference.html) and understand how to expose the form.
+* Created new field with input type ***textarea*** in geometric filter.
+* Defined the new function to check input WKT data of geometry B.
+* Installed and work around with [devel](https://www.drupal.org/project/devel) module.
+* Modified the query function according to need. Also prepared new query.  
+* Submitted mid term evaluations ;) .
 
 **Mentor Suggestions**
 
-* We need to implement a simple WKT field in the PostGIS configuration mask for a manual geometry B input as an alternative to the contextual filter.
+* We can ignore the exposed form for now and only work with the field filter configuration form.
 
 **Things to do next week**
 
-* Understand the Form API and query functions customization in Views. 
-* Test and implement the relational functions.  
+* Discuss and work on new timeline, based on progress I have made so far.
+* Tracing the query function call.  
+* Understand the Form API and query functions customization in Views.   
 
 
 **Reference Modules/Files** - 
