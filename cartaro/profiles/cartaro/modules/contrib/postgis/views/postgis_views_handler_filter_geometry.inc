@@ -120,14 +120,19 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
       return;
     }
     
+    $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
     // Check whether the geometry field is empty or not.
-
-    $geometry_B_wkt = $this->options['value']['geometry_B_wkt_data'];
-    if(empty($geometry_B_wkt)){
+    if(empty($geometry_B_wkt_data)){
       return;
     }
-    
-    // Check for value dvm($geometry_B_wkt);
+
+    // Check the text before sending it to SQL for query
+    if(!check_wkt_data($geometry_B_wkt_data)){
+      return;
+    }
+
+    // Check for value dvm
+    // dvm($geometry_B_wkt_data);
 
     $nid = $nid_arg->get_value();
     if (empty($nid)) {
@@ -145,7 +150,15 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     //$this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
 
     // Adding New Query. Copied from /views/views_handler_filter.inc
-    $this->query->add_where($this->options['group'], "$this->table_alias.$this->real_field", $this->value, $this->operator);
+    //$this->query->add_where($this->options['group'], "$this->table_alias.$this->real_field", $this->value, $this->operator);
 
   }
+
+  function check_wkt_data($geometry_B_wkt_data){
+    // function description will be added soon.
+    // on Success return 1; 
+    var pass_fail_flag=0;
+    return pass_fail_flag;
+  }
+
 }
