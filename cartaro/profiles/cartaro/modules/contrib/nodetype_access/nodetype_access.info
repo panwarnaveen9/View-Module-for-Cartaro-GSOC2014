@@ -1,0 +1,13 @@
+name = Nodetype access
+description = Provides view permissions per nodetype.
+package = Access control
+core = 7.x
+files[] = nodetype_access.test
+
+
+; Information added by drush on 2014-01-20
+version = "7.x-1.0-beta5"
+core = "7.x"
+project = "nodetype_access"
+datestamp = "1390210708"
+
