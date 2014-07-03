@@ -13,8 +13,6 @@
 
 **Mentor Suggestions**
 
-* 
-
 **Things to do next week**
 
 * Discuss and work on new timeline, based on the progress I have made so far.
