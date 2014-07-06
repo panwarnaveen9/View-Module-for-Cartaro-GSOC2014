@@ -22,7 +22,7 @@
 **Mentor Suggestions**
 * Due to network unavailability I was not able to connect with my mentor. I will discuss above issue with mentor and try to resolve it ASAP.
 
-###**Modified Timeline**###
+[**Modified Timeline**][]
 * Developing the fully functional filter module take 2 more week. 
 * I am planning to use 9th week's **buffer time** to complete the filter module. 
 * Will give more updates on it in next week report.
