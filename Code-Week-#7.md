@@ -26,7 +26,7 @@
 <a name="Modified Timeline"></a>
 * Developing the fully functional filter module take 2 more week. 
 * I am planning to use 9th week's **buffer time** to complete the filter module. 
-* Will give more updates on it in next week report.
+* I will give more updates on it in next week report.
 
 **Things to do next week**
 * Boost up the work on filter module.
@@ -39,4 +39,4 @@
 
 **Am I blocked on anything ?**
 
-No.
+Technically No, but this week I was held back by bad network connection.
