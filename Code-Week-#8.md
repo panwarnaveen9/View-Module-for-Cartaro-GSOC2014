@@ -17,7 +17,7 @@
 
 **Reference Modules/Files** - 
 * [handlers.inc](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/cartaro/profiles/cartaro/modules/contrib/views/includes/handlers.inc)
-* [views_plugin_query_default.inc](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/cartaro/profiles/cartaro/modules/contrib/views/includes/handlers.inc)
+* [views_plugin_query_default.inc](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/cartaro/profiles/cartaro/modules/contrib/views/plugins/views_plugin_query_default.inc)
 
 **Am I blocked on anything ?**
 
