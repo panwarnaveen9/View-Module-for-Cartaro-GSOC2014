@@ -142,7 +142,7 @@ class views_plugin_query_default extends views_plugin_query {
       'alias' => $base_table,
     );
 
-/**
+/*
  * -- we no longer want the base field to appear automatigically.
     if ($base_field) {
       $this->fields[$base_field] = array(

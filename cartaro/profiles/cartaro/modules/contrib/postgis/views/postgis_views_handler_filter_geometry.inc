@@ -144,11 +144,17 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     $operation = $this->options['operation'];
     $field_geometry = db_escape_table($this->definition['field_name'] . '_geometry');
     $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+    
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
     $where = "$operation((select $field_name from $table_name where entity_id = :nid), $this->table_alias.$field_geometry)";
 
     //$this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
+    $this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
 
+    // Need to ask what should I write here ? 
+    $geometry_where = "";
+    $this->query->add_where_expression($this->options['group'], $geometry_where, $geometry_B_wkt_data);
+    
     // Adding New Query. Copied from /views/views_handler_filter.inc
     //$this->query->add_where($this->options['group'], "$this->table_alias.$this->real_field", $this->value, $this->operator);
 
@@ -157,8 +163,8 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
   function check_wkt_data($geometry_B_wkt_data){
     // function description will be added soon.
     // on Success return 1; 
-    var pass_fail_flag=0;
-    return pass_fail_flag;
+    $pass_fail_flag=0;
+    return $pass_fail_flag;
   }
 
 }
