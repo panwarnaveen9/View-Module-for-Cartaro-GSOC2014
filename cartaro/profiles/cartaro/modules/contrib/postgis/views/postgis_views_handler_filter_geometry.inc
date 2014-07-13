@@ -143,8 +143,9 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
     $operation = $this->options['operation'];
     $field_geometry = db_escape_table($this->definition['field_name'] . '_geometry');
-    $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
-    
+    // Why do we need to append the string - (geometry) into field name. It already there  
+    //$field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+    $field_name = db_escape_table($this->options['value']['nid_postgis_field']);
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
     $where = "$operation((select $field_name from $table_name where entity_id = :nid), $this->table_alias.$field_geometry)";
 
