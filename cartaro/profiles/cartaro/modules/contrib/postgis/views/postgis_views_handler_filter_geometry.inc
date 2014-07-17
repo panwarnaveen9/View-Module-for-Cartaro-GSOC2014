@@ -59,33 +59,33 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
       '#required' => TRUE,
     );
 
-    $form['origin'] = array(
-      '#type' => 'select',
-      '#title' => t('Origin'),
-      '#options' => array(
-        'nid_arg' => t('Node ID from contextual filter'),
-      ),
-      '#description' => t('This will be the way the geometry of origin is determined.'),
-      '#default_value' => $this->options['origin'] ? $this->options['origin'] : 'nid_arg',
-    );
+    // $form['origin'] = array(
+    //   '#type' => 'select',
+    //   '#title' => t('Origin'),
+    //   '#options' => array(
+    //     'nid_arg' => t('Node ID from contextual filter'),
+    //   ),
+    //   '#description' => t('This will be the way the geometry of origin is determined.'),
+    //   '#default_value' => $this->options['origin'] ? $this->options['origin'] : 'nid_arg',
+    // );
 
-    $nid_arg_options = array();
-    $arguments = $this->view->display_handler->get_handlers('argument');
-    foreach ($arguments as $id => $handler) {
-      if ($handler->field == 'nid') {
-        $nid_arg_options[$id] = $handler->ui_name();
-      }
-    }
+    // $nid_arg_options = array();
+    // $arguments = $this->view->display_handler->get_handlers('argument');
+    // foreach ($arguments as $id => $handler) {
+    //   if ($handler->field == 'nid') {
+    //     $nid_arg_options[$id] = $handler->ui_name();
+    //   }
+    // }
 
-    $form['value']['nid_arg'] = array(
-      '#type' => 'select',
-      '#title' => t('Contextual filter'),
-      '#options' => $nid_arg_options,
-      '#default_value' => $this->value['nid_arg'],
-      '#description' => t('Select which of the contextual filters to use as the node ID.'),
-      '#dependency' => array('edit-options-origin' => array('nid_arg')),
-      '#weight' => 6,
-    );
+    // $form['value']['nid_arg'] = array(
+    //   '#type' => 'select',
+    //   '#title' => t('Contextual filter'),
+    //   '#options' => $nid_arg_options,
+    //   '#default_value' => $this->value['nid_arg'],
+    //   '#description' => t('Select which of the contextual filters to use as the node ID.'),
+    //   '#dependency' => array('edit-options-origin' => array('nid_arg')),
+    //   '#weight' => 6,
+    // );
 
     $nid_postgis_field_options = array();
     $fields = field_info_fields();
@@ -115,49 +115,52 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
   function query() {
 
-    $nid_arg = $this->view->display_handler->get_handler('argument', $this->options['value']['nid_arg']);
-    if (empty($this->value) || empty($nid_arg) || !in_array($this->options['operation'], $this->operations)) {
+    //$nid_arg = $this->view->display_handler->get_handler('argument', $this->options['value']['nid_arg']);
+    
+    // if (empty($this->value) || empty($nid_arg) || !in_array($this->options['operation'], $this->operations)) {
+    //   return;
+    // }
+    
+    // #################### Data from value_form()
+
+    $operation = $this->options['operation'];
+    $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
+
+
+    if (!in_array($this->options['operation'], $this->operations)) {
       return;
     }
+
     
-    $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
     // Check whether the geometry field is empty or not.
     if(empty($geometry_B_wkt_data)){
       return;
     }
 
     // Check the text before sending it to SQL for query
+    // For for we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
     if(!check_wkt_data($geometry_B_wkt_data)){
       return;
     }
 
-    // Check for value dvm
-    // dvm($geometry_B_wkt_data);
-
-    $nid = $nid_arg->get_value();
-    if (empty($nid)) {
-      return;
-    }
 
     $this->ensure_my_table();
 
-    $operation = $this->options['operation'];
-    $field_geometry = db_escape_table($this->definition['field_name'] . '_geometry');
+    //$field_geometry = db_escape_table($this->definition['field_name'] . '_geometry');
+    
     // Why do we need to append the string - (geometry) into field name. It already there  
     //$field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+    
     $field_name = db_escape_table($this->options['value']['nid_postgis_field']);
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
-    $where = "$operation((select $field_name from $table_name where entity_id = :nid), $this->table_alias.$field_geometry)";
-
-    //$this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
-    $this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
+    
+    // $where = "$operation((select $field_name from $table_name where entity_id = :nid), $this->table_alias.$field_geometry)";
+    // $this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
 
     // Need to ask what should I write here ? 
-    $geometry_where = "";
-    $this->query->add_where_expression($this->options['group'], $geometry_where, $geometry_B_wkt_data);
     
-    // Adding New Query. Copied from /views/views_handler_filter.inc
-    //$this->query->add_where($this->options['group'], "$this->table_alias.$this->real_field", $this->value, $this->operator);
+    $geometry_where = "$operation(($table_name.$field_name, $geometry_B_wkt_data)";
+    $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
 
   }
 
@@ -165,7 +168,7 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     // function description will be added soon.
     // on Success return 1; 
     $pass_fail_flag=0;
-    return $pass_fail_flag;
+    return 1; // for now 
   }
 
 }

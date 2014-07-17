@@ -155,7 +155,7 @@ class views_handler extends views_object {
   /**
    * The top object of a view.
    *
-   * @var view
+   * @var view 
    */
   var $view = NULL;
 
