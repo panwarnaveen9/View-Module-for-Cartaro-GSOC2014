@@ -128,7 +128,7 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     }
 
     // Check the text before sending it to SQL for query
-    // For for we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
+    // For now we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
     if(!$this->check_wkt_data($geometry_B_wkt_data)){
         return;
     }
@@ -137,16 +137,15 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
     
-    $geometry_where = "$operation(($table_name.$field_name, $geometry_B_wkt_data)";
-    $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
+    $geometry_where = "$operation(st_setsrid(:wkt,4326), $table_name.$field_name)";
+    $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
 
   }
 
   function check_wkt_data($geometry_B_wkt_data){
     // function description will be added soon.
-    // on Success return 1; 
     $pass_fail_flag=0;
-    return 1; // for now 
+    return 1; // on Success return 1; 
   }
 
 }
