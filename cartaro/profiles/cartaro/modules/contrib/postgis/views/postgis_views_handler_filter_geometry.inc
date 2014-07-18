@@ -115,22 +115,12 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
   function query() {
 
-    //$nid_arg = $this->view->display_handler->get_handler('argument', $this->options['value']['nid_arg']);
-    
-    // if (empty($this->value) || empty($nid_arg) || !in_array($this->options['operation'], $this->operations)) {
-    //   return;
-    // }
-    
-    // #################### Data from value_form()
-
     $operation = $this->options['operation'];
     $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
-
 
     if (!in_array($this->options['operation'], $this->operations)) {
       return;
     }
-
     
     // Check whether the geometry field is empty or not.
     if(empty($geometry_B_wkt_data)){
@@ -139,25 +129,13 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
 
     // Check the text before sending it to SQL for query
     // For for we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
-    if(!check_wkt_data($geometry_B_wkt_data)){
-      return;
+    if(!$this->check_wkt_data($geometry_B_wkt_data)){
+        return;
     }
 
-
-    $this->ensure_my_table();
-
-    //$field_geometry = db_escape_table($this->definition['field_name'] . '_geometry');
-    
-    // Why do we need to append the string - (geometry) into field name. It already there  
-    //$field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
-    
-    $field_name = db_escape_table($this->options['value']['nid_postgis_field']);
+    $this->ensure_my_table();    
+    $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
-    
-    // $where = "$operation((select $field_name from $table_name where entity_id = :nid), $this->table_alias.$field_geometry)";
-    // $this->query->add_where_expression($this->options['group'], $where, array(':nid' => $nid));
-
-    // Need to ask what should I write here ? 
     
     $geometry_where = "$operation(($table_name.$field_name, $geometry_B_wkt_data)";
     $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
