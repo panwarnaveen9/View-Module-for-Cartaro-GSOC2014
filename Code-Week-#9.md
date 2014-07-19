@@ -12,7 +12,7 @@
 * Added a complex where clause to the query.
 
   `$this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );`
-* Completed the query function also successfully tested it for ST_Contains.
+* Completed the query function, also successfully tested it for ST_Contains.
 * Removed unnecessary lines from the code. 
 
 
