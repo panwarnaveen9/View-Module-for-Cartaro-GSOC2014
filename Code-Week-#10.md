@@ -6,7 +6,6 @@
 
 **Things, I have done this week**
 * Test the query function for the remaining operations like: ST_Intersects, ST_Covers etc..
-* Removed unnecessary lines from the code. 
 
 
 **Mentor Suggestions**
