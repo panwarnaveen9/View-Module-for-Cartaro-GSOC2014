@@ -5,7 +5,7 @@
 **Aim** - Implement the spatial filter functions for the module.
 
 **Things, I have done this week**
-* Test the query function for the remaining operations like: ST_Intersects, ST_Covers etc..
+* Test the query function for the remaining operations like: ST_Within, ST_Covers, ST_Overlaps etc..
 * Added more spatial relationship function to module like: ST_Crosses, ST_CoveredBy, ST_ContainsProperly.
 
 
