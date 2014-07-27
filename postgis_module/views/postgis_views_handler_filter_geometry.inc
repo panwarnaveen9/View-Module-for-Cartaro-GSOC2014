@@ -140,10 +140,12 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     $this->ensure_my_table();    
     $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
     $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
-    
-    $geometry_where = "$operation(st_setsrid(:wkt,4326), $table_name.$field_name)";
-    $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
 
+    $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
+    $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+
+    $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
+    $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
   }
 
   function check_wkt_data($geometry_B_wkt_data){
