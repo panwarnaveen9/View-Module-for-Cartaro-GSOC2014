@@ -9,6 +9,30 @@
 * Geometry validation by adding [ST_IsValid](http://postgis.refractions.net/documentation/manual-1.4/ST_IsValid.html) in where clause of query.
 * Added more spatial relationship function to module like: ST_Crosses, ST_CoveredBy, ST_ContainsProperly.
 
+
+**Comments**
+
+There are two ways to provide all spatial functions/operations to users.
+
+1. Categorization
+ 1. We can categorize all functions/operations according the [PostGIS Reference](http://postgis.net/docs/manual-2.0/reference.html#Spatial_Relationships_Measurements) and make different input forms to access them. 
+ 2. Once user select the category then he will get list of all available functions/operations in that particular category and customized input form.
+ 3. Example
+   * Spatial Measurements
+     * ST_Area, ST_Azimuth, ST_Centroid etc..
+    * Spatial Relationships
+      * ST_Equals,ST_Touches, ST_Within etc..
+
+2. Query Builder
+  1. We can provide the list of all available functions/operations at once and a common form to take the all possible inputs.
+  2. Once user submit this form then based on his selected function we will consider only particular fields values associate with it and form the query. 
+  3. Example
+   * List of all functions
+   * Choose PostGIS field drop-down
+   * Input Geometry B data
+   * Extra Value (like: distance for ST_DWithin function etc..)
+
+
 **Things to do next week**
 * 
 
