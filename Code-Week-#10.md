@@ -40,7 +40,7 @@ There are two ways to provide all spatial functions/operations to users.
     * Extra Value (like: distance for ST_DWithin function etc..)
 
 **Things to do next week**
-* Select the one of two approach mentioned above.
+* Select one out of two approaches and modified the code accordingly.
 * Complete the query functionality for all **Spatial Measurements** and **Operators**.  
 
 **Reference Modules/Files** - 
