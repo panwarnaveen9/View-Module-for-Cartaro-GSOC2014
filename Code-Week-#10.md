@@ -15,7 +15,7 @@
 * Week 12 - Building query for specific functions for  **Geometry Accessors** and **Geometry Editors**.
 * Week 13 - Testing the all functionality of View module. 
 
-**Comments**
+**Approach**
 
 There are two ways to provide all spatial functions/operations to users.
 
