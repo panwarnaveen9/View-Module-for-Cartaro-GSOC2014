@@ -49,7 +49,7 @@
  * ST_Union
  * ST_Split
  * ST_Difference
-
+ * ST_SharedPaths
 
 ### Type 2
 
@@ -61,10 +61,17 @@
 
 **Geometry A -** Geometry field store in PostGIS.
 
-**Spatial Measurements**
-* ST_Area
-* ST_Azimuth
-* ST_Centroid
-* ST_HasArc
-* ST_Length
-* ST_Perimeter
+* **Spatial Measurements**
+ * ST_Area
+ * ST_Azimuth
+ * ST_Centroid
+ * ST_HasArc
+ * ST_Length
+ * ST_Perimeter
+
+* **Spatial Outputs**
+ * ST_AsEWKT
+ * ST_AsText 
+ * ST_AsLatLonText `For points only`
+
+
