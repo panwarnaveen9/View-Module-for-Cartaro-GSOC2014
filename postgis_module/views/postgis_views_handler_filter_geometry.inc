@@ -15,6 +15,7 @@
     var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Crosses', 'ST_Equals', 'ST_Touches', 'ST_Within', 'ST_Overlaps', 
       'ST_CoveredBy', 'ST_ContainsProperly',
       'ST_Area', 'ST_Azimuth', 'ST_Centroid', 'ST_HasArc', 'ST_Length', 'ST_Perimeter',
+      '&&', '&&&', '&<', '&<|', '&>', '<<', '<<|', '=', '>>', '@', '|&>', '|>>', '~', '~=',
       );
 
     function option_definition() {
@@ -79,6 +80,23 @@
           'ST_Perimeter' => t('Perimeter'),
           ),
 
+          'Spatial Operator' => array(
+            '&&' => t('&&'),
+            '&&&' => t('&&&'),
+            '&<' => t('&<'),
+            '&<|' => t('&<|'),
+            '&>' => t('&>'),
+            '<<' => t('<<'),
+            '<<|' => t('<<'),
+            '=' => t('='),
+            '>>' => t('>>'),
+            '@' => t('@'),
+            '|&>' => t('|&>'),
+            '|>>' => t('|>>'),
+            '~' => t('~'),
+            '~=' => t('~='),
+            ),
+
         ),
         '#description' => t('This will be the way the relationship is determined.'),
         '#default_value' => $this->options['value']['operation'] ? $this->options['value']['operation'] : 'ST_Contains',
@@ -112,6 +130,8 @@
           'ST_Perimeter',
           );
 
+      $Spatial_operators = array('&&', '&&&', '&<', '&<|', '&>', '<<', '<<|', '=', '>>', '@', '|&>', '|>>', '~', '~=',);
+
       if(!in_array($operation, $Spatial_measurements_functions)){
         // Check whether the geometry field is empty or not.
         if(empty($geometry_B_wkt_data)){
@@ -130,9 +150,15 @@
 
         $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
         $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
-
-        $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
-        $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+        
+        if (!in_array($operation, $Spatial_operators)) {
+          $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
+          $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+        }
+        else{
+          $operator_where = "ST_SetSRID(:wkt,4326) ~ $table_name.$field_name";
+          $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+        }
       }
 
       else{
