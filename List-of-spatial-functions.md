@@ -1,4 +1,4 @@
-### Type 1
+### Type 1-A
 
 **Input type -** function_name(geometry A, geometry B)
 
@@ -40,11 +40,22 @@
   * ~ 
  * ~= 
 
+### Type 1-B 
+
+`Take same inputs as Type 1-A but returned geometry`
+
+* **Geometry Processing** 
+ * ST_Intersection
+ * ST_Union
+ * ST_Split
+ * ST_Difference
+
+
 ### Type 2
 
 **Input type -** function_name(geometry A)
 
-**Return type -** New field or modified value of geometric field. ``
+**Return type -** New field or modified value of geometric field. `Used, when we have derived filed value, aggregated output or spatial operation on geometric field.`
 
 **Example -** ST_Area(geom A), ST_Perimeter (geom A).
 
