@@ -168,12 +168,14 @@
         $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
 
         // Have to add new field here like ST_Area Example :
-        //SELECT ST_Area(Field_name) 
+        //SELECT ST_Area(Field_name)  
         //FROM Table_name. 
 
         // I think we have to used compile_fields or add_field function 
         
-        //$measurement_query = 'ST_Area(:geom)';
+        $measurement_query = $field_name; //'ST_Area(ST_SetSRID(:geom, 4326))';
+        $this->query->add_field($table_name, $measurement_query, $alias = 'Area', $params = array());
+
         //$this->query->add_where_expression($this->options['group'], $measurement_query, $args = array(':geom' => $table_name.$field_name) );        
 
       }
