@@ -43,13 +43,13 @@
           $nid_postgis_field_options[$field['field_name']] = $field['field_name'];
         }
       }
+
       $form['value']['nid_postgis_field'] = array(
         '#type' => 'select',
         '#title' => t('PostGIS field'),
         '#options' => $nid_postgis_field_options,
         '#default_value' => $this->value['nid_postgis_field'],
         '#description' => t('Select which of the node\'s PostGIS field to use as the origin.'),
-        '#dependency' => array('edit-options-origin' => array('nid_arg')),
       );
 
       $form['value']['operation'] = array(
@@ -102,12 +102,28 @@
         '#default_value' => $this->options['value']['operation'] ? $this->options['value']['operation'] : 'ST_Contains',
       );
 
+      $nid_postgis_field_options_2 = array();
+      $nid_postgis_field_options_2[''] = 'Select';
+      $fields = field_info_fields();
+      foreach ($fields as $field) {
+        if ($field['module'] == 'postgis') {
+          $nid_postgis_field_options_2[$field['field_name']] = $field['field_name'];
+        }
+      }
+
+      $form['value']['existing_postgis_field'] = array(
+        '#type' => 'select',
+        '#title' => t('Existing PostGIS field'),
+        '#options' => $nid_postgis_field_options_2,
+        '#default_value' => $this->value['existing_postgis_field'],
+        '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.'),
+      );
+
       $form['value']['geometry_B_wkt_data'] = array(
         '#type' => 'textarea',
         '#title' => t('Geometry B'),
         '#description' => t('Provide the geometry in WKT format.'),
-        '#default_value' => t(''),
-       // '#required' => TRUE,
+        '#default_value' => t('POLYGON((-176.17453 -54.28111,-176.17453 78.2186,179.19417 78.2186,179.19417 -54.28111,-176.17453 -54.28111))'),
       );
     }
 
@@ -134,33 +150,56 @@
 
       if(!in_array($operation, $Spatial_measurements_functions)){
         // Check whether the geometry field is empty or not.
-        if(empty($geometry_B_wkt_data)){
-          return;
-        }
+          $existing_postgis_field = $this->options['value']['existing_postgis_field'];
+          if($existing_postgis_field=='')
+          {  
+            if(empty($geometry_B_wkt_data)){
+              return;
+            }
 
-        // Check the text before sending it to SQL for query
-        // For now we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
-        if(!$this->check_wkt_data($geometry_B_wkt_data)){
-            return;
-        } 
+            // Check the text before sending it to SQL for query
+            // For now we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
+            if(!$this->check_wkt_data($geometry_B_wkt_data)){
+                return;
+            } 
 
-        $this->ensure_my_table();    
-        $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
-        $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
+            $this->ensure_my_table();    
+            $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+            $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
 
-        $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
-        $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
-        
-        if (!in_array($operation, $Spatial_operators)) {
-          $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
-          $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
-        }
-        else{
-          $operator_where = "ST_SetSRID(:wkt,4326) ~ $table_name.$field_name";
-          $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
-        }
+            $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
+            $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            
+            if (!in_array($operation, $Spatial_operators)) {
+              $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
+              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            }
+            else{
+              $operator_where = "ST_SetSRID(:wkt,4326) ~ $table_name.$field_name";// Hard coded operator ~ need to chage // 
+              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            }
+          }
+          else
+          {
+            $this->ensure_my_table();    
+            $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+            $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
+
+            $field_name_2 = db_escape_table($this->options['value']['existing_postgis_field'] . '_geometry');
+            $table_name_2 = db_escape_table('field_data_' . $this->options['value']['existing_postgis_field']);
+
+            $this->query->add_table($table_name_2, $relationship = NULL, $join = NULL, $alias = NULL);
+            
+            if (!in_array($operation, $Spatial_operators)) {
+              $geometry_where = "$operation($table_name_2.$field_name_2, $table_name.$field_name)";
+              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
+            }
+            else{
+              $operator_where = ":wkt ~ $table_name.$field_name"; // Hard coded operator ~ need to chage // 
+              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $table_name_2.'.'.$field_name_2) );
+            }
+          }
       }
-
       else{
 
         $this->ensure_my_table();    
