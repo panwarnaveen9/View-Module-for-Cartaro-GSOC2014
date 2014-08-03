@@ -15,7 +15,9 @@
  For example, using the geometry from other nodes as input.
 
 **Things to do next week**
-* 
+* Add the existing PostGIS field to user input form and enable them for query.
+* Add more filter functions to module.
+* Testing for existing functionality.
 
 
 **Reference Modules/Files** - 
