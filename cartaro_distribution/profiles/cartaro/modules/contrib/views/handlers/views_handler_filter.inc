@@ -79,7 +79,7 @@ class views_handler_filter extends views_handler {
     $this->value = $this->options['value'];
     $this->group_info = $this->options['group_info']['default_group'];
 
-    // Compatibility: The new UI changed several settings.
+    // Compatibility: The new UI changed several settingsqu.
     if (!empty($options['exposed']) && !empty($options['expose']['optional']) && !isset($options['expose']['required'])) {
       $this->options['expose']['required'] = !$options['expose']['optional'];
     }
@@ -183,7 +183,7 @@ class views_handler_filter extends views_handler {
 
   /**
    * Provide the basic form which calls through to subforms.
-   * If overridden, it is best to call through to the parent,
+   * If overridden, it is      best to call through to the parent,
    * or to at least make sure all of the functions in this form
    * are called.
    */
@@ -1257,7 +1257,7 @@ class views_handler_filter extends views_handler {
     }
 
     if (!empty($this->options['expose']['identifier'])) {
-      $value = $input[$this->options['expose']['identifier']];
+       $value = $input[$this->options['expose']['identifier']];
 
       // Various ways to check for the absence of non-required input.
       if (empty($this->options['expose']['required'])) {

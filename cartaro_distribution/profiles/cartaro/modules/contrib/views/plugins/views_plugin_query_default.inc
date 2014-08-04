@@ -1049,7 +1049,7 @@ class views_plugin_query_default extends views_plugin_query {
       'direction' => strtoupper($order)
     );
 
-	/**
+	/* *
  	 * -- removing, this should be taken care of by field adding now.
      * -- leaving commented because I am unsure.
       // If grouping, all items in the order by must also be in the

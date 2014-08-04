@@ -1,151 +1,229 @@
-<?php
+  <?php
 
-/**
- * @file
- * Definition of postgis_views_handler_filter_geometry.
- */
+  /**
+   * @file
+   * Definition of postgis_views_handler_filter_geometry.
+   */
 
-/**
- * A handler to provide filter for geospatial data.
- */
-class postgis_views_handler_filter_geometry extends views_handler_filter {
+  /**
+   * A handler to provide filter for geospatial data.
+   */
+  class postgis_views_handler_filter_geometry extends views_handler_filter {
 
-  var $no_operator = TRUE;
+    var $no_operator = TRUE;
 
-  /*var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint');*/
+    var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Crosses', 'ST_Equals', 'ST_Touches', 'ST_Within', 'ST_Overlaps', 
+      'ST_CoveredBy', 'ST_ContainsProperly',
+      'ST_Area', 'ST_Azimuth', 'ST_Centroid', 'ST_HasArc', 'ST_Length', 'ST_Perimeter',
+      '&&', '&&&', '&<', '&<|', '&>', '<<', '<<|', '=', '>>', '@', '|&>', '|>>', '~', '~=',
+      );
 
-  var $operations = array('ST_Contains', 'ST_Intersects', 'ST_Disjoint', 'ST_Covers', 'ST_Equals', 'ST_Touches', 'ST_Within', 'ST_Overlaps' );
+    function option_definition() {
 
-  function option_definition() {
+      $options = parent::option_definition();
+      $options['operation'] = array('default' => 'ST_Contains');
+      $options['origin'] = array('default' => 'nid_arg');
+      $options['value'] = array(
+        'default' => array(
+          'nid_arg' => '',
+          'nid_postgis_field' => '',
+          'geometry_B_wkt_data' => '',
+        ),
+      );
 
-    $options = parent::option_definition();
-    $options['operation'] = array('default' => 'ST_Contains');
-    $options['origin'] = array('default' => 'nid_arg');
-    $options['value'] = array(
-      'default' => array(
-        'nid_arg' => '',
-        'nid_postgis_field' => '',
-        'geometry_B_wkt_data' => '',
-      ),
-    );
+      return $options;
+    }
 
-    return $options;
-  }
+    function value_form(&$form, &$form_state) {
 
-  function value_form(&$form, &$form_state) {
+      $nid_postgis_field_options = array();
+      $fields = field_info_fields();
+      foreach ($fields as $field) {
+        if ($field['module'] == 'postgis') {
+          $nid_postgis_field_options[$field['field_name']] = $field['field_name'];
+        }
+      }
 
-    $form['operation'] = array(
-      '#type' => 'select',
-      '#title' => t('Operation'),
-      '#options' => array(
-        'ST_Contains' => t('Contains'), 
-        'ST_Intersects' => t('Intersects'), 
-        'ST_Disjoint' => t('Disjoint'),
-        'ST_Covers' => t('Covers'),
-        'ST_Equals' => t('Equals'),
-        'ST_Touches' => t('Touches'),
-        'ST_Within' => t('Within'),
-        'ST_Overlaps' => t('Overlaps'), 
-      ),
-      '#description' => t('This will be the way the relationship is determined.'),
-      '#default_value' => $this->options['operation'] ? $this->options['operation'] : 'ST_Contains',
-    );
+      $form['value']['nid_postgis_field'] = array(
+        '#type' => 'select',
+        '#title' => t('PostGIS field'),
+        '#options' => $nid_postgis_field_options,
+        '#default_value' => $this->value['nid_postgis_field'],
+        '#description' => t('Select which of the node\'s PostGIS field to use as the origin.'),
+      );
 
-    $form['value']['geometry_B_wkt_data'] = array(
-      '#type' => 'textarea',
-      '#title' => t('Geometry B'),
-      '#description' => t('Provide the geometry in WKT format.'),
-      '#default_value' => t(''),
-      '#required' => TRUE,
-    );
+      $form['value']['operation'] = array(
+        '#type' => 'select',
+        '#title' => t('Operation'),
+        '#options' => array(
+          
+          'Spatial relationship' =>  array( 
+          'ST_Contains' => t('Contains'), 
+          'ST_Intersects' => t('Intersects'), 
+          'ST_Disjoint' => t('Disjoint'),
+          'ST_Covers' => t('Covers'),
+          'ST_Crosses' => t('Crosses'),
+          'ST_Equals' => t('Equals'),
+          'ST_Touches' => t('Touches'),
+          'ST_Within' => t('Within'),
+          'ST_Overlaps' => t('Overlaps'), 
+          'ST_CoveredBy' => t('CoveredBy'),
+          'ST_ContainsProperly' => t('ContainsProperly'),
+          ),
 
-    // $form['origin'] = array(
-    //   '#type' => 'select',
-    //   '#title' => t('Origin'),
-    //   '#options' => array(
-    //     'nid_arg' => t('Node ID from contextual filter'),
-    //   ),
-    //   '#description' => t('This will be the way the geometry of origin is determined.'),
-    //   '#default_value' => $this->options['origin'] ? $this->options['origin'] : 'nid_arg',
-    // );
+          'Spatial Measurements' => array(
+          'ST_Area' => t('Area'), 
+          'ST_Azimuth' => t('Azimuth'),
+          'ST_Centroid' => t('Centroid'), 
+          'ST_HasArc' => t('HasArc'), 
+          'ST_Length' => t('Length'), 
+          'ST_Perimeter' => t('Perimeter'),
+          ),
 
-    // $nid_arg_options = array();
-    // $arguments = $this->view->display_handler->get_handlers('argument');
-    // foreach ($arguments as $id => $handler) {
-    //   if ($handler->field == 'nid') {
-    //     $nid_arg_options[$id] = $handler->ui_name();
-    //   }
-    // }
+          'Spatial Operator' => array(
+            '&&' => t('&&'),
+            '&&&' => t('&&&'),
+            '&<' => t('&<'),
+            '&<|' => t('&<|'),
+            '&>' => t('&>'),
+            '<<' => t('<<'),
+            '<<|' => t('<<'),
+            '=' => t('='),
+            '>>' => t('>>'),
+            '@' => t('@'),
+            '|&>' => t('|&>'),
+            '|>>' => t('|>>'),
+            '~' => t('~'),
+            '~=' => t('~='),
+            ),
 
-    // $form['value']['nid_arg'] = array(
-    //   '#type' => 'select',
-    //   '#title' => t('Contextual filter'),
-    //   '#options' => $nid_arg_options,
-    //   '#default_value' => $this->value['nid_arg'],
-    //   '#description' => t('Select which of the contextual filters to use as the node ID.'),
-    //   '#dependency' => array('edit-options-origin' => array('nid_arg')),
-    //   '#weight' => 6,
-    // );
+        ),
+        '#description' => t('This will be the way the relationship is determined.'),
+        '#default_value' => $this->options['value']['operation'] ? $this->options['value']['operation'] : 'ST_Contains',
+      );
 
-    $nid_postgis_field_options = array();
-    $fields = field_info_fields();
-    foreach ($fields as $field) {
-      if ($field['module'] == 'postgis') {
-        $nid_postgis_field_options[$field['field_name']] = $field['field_name'];
+      $nid_postgis_field_options_2 = array();
+      $nid_postgis_field_options_2[''] = 'Select';
+      $fields = field_info_fields();
+      foreach ($fields as $field) {
+        if ($field['module'] == 'postgis') {
+          $nid_postgis_field_options_2[$field['field_name']] = $field['field_name'];
+        }
+      }
+
+      $form['value']['existing_postgis_field'] = array(
+        '#type' => 'select',
+        '#title' => t('Existing PostGIS field'),
+        '#options' => $nid_postgis_field_options_2,
+        '#default_value' => $this->value['existing_postgis_field'],
+        '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.'),
+      );
+
+      $form['value']['geometry_B_wkt_data'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Geometry B'),
+        '#description' => t('Provide the geometry in WKT format.'),
+        '#default_value' => t('POLYGON((-176.17453 -54.28111,-176.17453 78.2186,179.19417 78.2186,179.19417 -54.28111,-176.17453 -54.28111))'),
+      );
+    }
+
+
+    function query() {
+
+      $operation = $this->options['value']['operation'];
+      $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
+
+      if (!in_array($this->options['value']['operation'], $this->operations)) {
+        return;
+      }
+      
+      $Spatial_measurements_functions =  array(
+          'ST_Area', 
+          'ST_Azimuth', 
+          'ST_Centroid', 
+          'ST_HasArc', 
+          'ST_Length', 
+          'ST_Perimeter',
+          );
+
+      $Spatial_operators = array('&&', '&&&', '&<', '&<|', '&>', '<<', '<<|', '=', '>>', '@', '|&>', '|>>', '~', '~=',);
+
+      if(!in_array($operation, $Spatial_measurements_functions)){
+        // Check whether the geometry field is empty or not.
+          $existing_postgis_field = $this->options['value']['existing_postgis_field'];
+          if($existing_postgis_field=='')
+          {  
+            if(empty($geometry_B_wkt_data)){
+              return;
+            }
+
+            // Check the text before sending it to SQL for query
+            // For now we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
+            if(!$this->check_wkt_data($geometry_B_wkt_data)){
+                return;
+            } 
+
+            $this->ensure_my_table();    
+            $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+            $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
+
+            $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
+            $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            
+            if (!in_array($operation, $Spatial_operators)) {
+              $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
+              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            }
+            else{
+              $operator_where = "ST_SetSRID(:wkt,4326) ~ $table_name.$field_name";// Hard coded operator ~ need to chage // 
+              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            }
+          }
+          else
+          {
+            $this->ensure_my_table();    
+            $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+            $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
+
+            $field_name_2 = db_escape_table($this->options['value']['existing_postgis_field'] . '_geometry');
+            $table_name_2 = db_escape_table('field_data_' . $this->options['value']['existing_postgis_field']);
+
+            $this->query->add_table($table_name_2, $relationship = NULL, $join = NULL, $alias = NULL);
+            
+            if (!in_array($operation, $Spatial_operators)) {
+              $geometry_where = "$operation($table_name_2.$field_name_2, $table_name.$field_name)";
+              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
+            }
+            else{
+              $operator_where = ":wkt ~ $table_name.$field_name"; // Hard coded operator ~ need to chage // 
+              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $table_name_2.'.'.$field_name_2) );
+            }
+          }
+      }
+      else{
+
+        $this->ensure_my_table();    
+        $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
+        $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
+
+        // Have to add new field here like ST_Area Example :
+        //SELECT ST_Area(Field_name)  
+        //FROM Table_name. 
+
+        // I think we have to used compile_fields or add_field function 
+        
+        $measurement_query = $field_name; //'ST_Area(ST_SetSRID(:geom, 4326))';
+        $this->query->add_field($table_name, $measurement_query, $alias = 'Area', $params = array());
+
+        //$this->query->add_where_expression($this->options['group'], $measurement_query, $args = array(':geom' => $table_name.$field_name) );        
+
       }
     }
-    $form['value']['nid_postgis_field'] = array(
-      '#type' => 'select',
-      '#title' => t('PostGIS field'),
-      '#options' => $nid_postgis_field_options,
-      '#default_value' => $this->value['nid_postgis_field'],
-      '#description' => t('Select which of the node\'s PostGIS field to use as the origin.'),
-      '#dependency' => array('edit-options-origin' => array('nid_arg')),
-      '#weight' => 7,
-    );
-  }
 
-  function dvm($input, $name = NULL) {
-    if (user_access('access devel information')) {
-      $export = dprint_r($input, TRUE, $name, 'drupal_var_export', FALSE);
-      drupal_set_message($export);
-    }
-    return $input;
-  }
-
-  function query() {
-
-    $operation = $this->options['operation'];
-    $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
-
-    if (!in_array($this->options['operation'], $this->operations)) {
-      return;
-    }
-    
-    // Check whether the geometry field is empty or not.
-    if(empty($geometry_B_wkt_data)){
-      return;
+    function check_wkt_data($geometry_B_wkt_data){
+      // function description will be added soon.
+      $pass_fail_flag=0;
+      return 1; // on Success return 1; 
     }
 
-    // Check the text before sending it to SQL for query
-    // For now we are not developing this. but this is necessary in term of user actully sending us data in WKT formate
-    if(!$this->check_wkt_data($geometry_B_wkt_data)){
-        return;
-    }
-
-    $this->ensure_my_table();    
-    $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
-    $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
-    
-    $geometry_where = "$operation(st_setsrid(:wkt,4326), $table_name.$field_name)";
-    $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
-
   }
-
-  function check_wkt_data($geometry_B_wkt_data){
-    // function description will be added soon.
-    $pass_fail_flag=0;
-    return 1; // on Success return 1; 
-  }
-
-}
