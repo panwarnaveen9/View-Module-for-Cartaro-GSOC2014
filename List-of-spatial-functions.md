@@ -40,6 +40,10 @@
   * ~ 
  * ~= 
 
+**`We will be focusing more on filter functions. Also we are considering the other means of geometry input for geometry B. For example, using the geometry from other nodes as input. So for now we are dropping the development of Type 1-B and Type 2 geometry functions`**
+
+
+
 ### Type 1-B 
 
 `Take same inputs as Type 1-A but returned geometry`
