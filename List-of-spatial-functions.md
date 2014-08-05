@@ -57,6 +57,7 @@
 
 ### Type 2
 
+
 **Input type -** function_name(geometry A)
 
 **Return type -** New field or modified value of geometric field. `Used, when we have derived filed value, aggregated output or spatial operation on geometric field.`
@@ -65,6 +66,15 @@
 
 **Geometry A -** Geometry field store in PostGIS.
 
+`As of now we are providing the filter functionality for these functions so we can modified the query as follow.`
+
+**Query** - where (ST_Area(geom A) = or < or > numeric value)  
+
+**Input Required** - We need following field to build this query
+1. Geometry field
+2. Numeric value (like: 0, 123, 5690)
+3. Comparison Operators (like: =,<,>,<> etc.)
+ 
 * **Spatial Measurements**
  * ST_Area
  * ST_Azimuth
