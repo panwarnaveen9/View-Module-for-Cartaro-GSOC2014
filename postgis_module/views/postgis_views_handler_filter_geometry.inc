@@ -175,7 +175,7 @@
               $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
             }
             else{
-              $operator_where = "ST_SetSRID(:wkt,4326) ~ $table_name.$field_name";// Hard coded operator ~ need to chage // 
+              $operator_where = "ST_SetSRID(:wkt,4326) $operation $table_name.$field_name";
               $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
             }
           }
@@ -195,7 +195,7 @@
               $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
             }
             else{
-              $operator_where = ":wkt ~ $table_name.$field_name"; // Hard coded operator ~ need to chage // 
+              $operator_where = ":wkt $operation $table_name.$field_name"; 
               $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $table_name_2.'.'.$field_name_2) );
             }
           }
