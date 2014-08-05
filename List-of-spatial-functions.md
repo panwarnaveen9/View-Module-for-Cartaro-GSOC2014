@@ -40,10 +40,6 @@
   * ~ 
  * ~= 
 
-**`We will be focusing more on filter functions. Also we are considering the other means of geometry input for geometry B. For example, using the geometry from other nodes as input. So for now we are dropping the development of Type 1-B and Type 2 geometry functions`**
-
-
-
 ### Type 1-B 
 
 `Take same inputs as Type 1-A but returned geometry`
@@ -55,9 +51,18 @@
  * ST_Difference
  * ST_SharedPaths
 
+`We will be focusing more on filter functions. Also we are considering the other means of geometry input for geometry B. For example, using the geometry from other nodes as input. So as of now we are providing the filter functionality for followings functions so we can modified the query as follow.`
+
+**Query** - where (ST_Area(geom A) = or < or > numeric value)  
+
+**Input Required** - We need following field to build this query.
+
+1. Geometric field
+2. Numeric value (like: 0, 123, 5690)
+3. Comparison Operators (like: =,<,>,<> etc.)
+
 ### Type 2
-
-
+    
 **Input type -** function_name(geometry A)
 
 **Return type -** New field or modified value of geometric field. `Used, when we have derived filed value, aggregated output or spatial operation on geometric field.`
@@ -65,15 +70,6 @@
 **Example -** ST_Area(geom A), ST_Perimeter (geom A).
 
 **Geometry A -** Geometry field store in PostGIS.
-
-`As of now we are providing the filter functionality for these functions so we can modified the query as follow.`
-
-**Query** - where (ST_Area(geom A) = or < or > numeric value)  
-
-**Input Required** - We need following field to build this query
-1. Geometry field
-2. Numeric value (like: 0, 123, 5690)
-3. Comparison Operators (like: =,<,>,<> etc.)
  
 * **Spatial Measurements**
  * ST_Area
@@ -87,5 +83,6 @@
  * ST_AsEWKT
  * ST_AsText 
  * ST_AsLatLonText `For points only`
+
 
 
