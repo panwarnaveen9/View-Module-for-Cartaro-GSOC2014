@@ -51,7 +51,7 @@
  * ST_Difference
  * ST_SharedPaths
 
-`We will be focusing more on filter functions. Also we are considering the other means of geometry input for geometry B. For example, using the geometry from other nodes as input. So as of now we are providing the filter functionality for followings functions so we can modified the query as follow.`
+`We will be focusing more on filter functions. Also we are considering the other means of geometry input for geometry B. For example, using the geometry from other nodes as input. So as of now we are providing the filter functionality for followings functions thus we can modified the query as follow.`
 
 **Query** - where (ST_Area(geom A) = or < or > numeric value)  
 
