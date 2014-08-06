@@ -24,6 +24,7 @@
  * ST_CoveredBy
  * ST_ContainsProperly
 
+
 * **Spatial Operators**
   * && 
   * &&&
