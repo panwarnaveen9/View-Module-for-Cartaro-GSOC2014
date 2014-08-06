@@ -71,15 +71,6 @@
           'ST_ContainsProperly' => t('ContainsProperly'),
           ),
 
-          'Spatial Measurements' => array(
-          'ST_Area' => t('Area'), 
-          'ST_Azimuth' => t('Azimuth'),
-          'ST_Centroid' => t('Centroid'), 
-          'ST_HasArc' => t('HasArc'), 
-          'ST_Length' => t('Length'), 
-          'ST_Perimeter' => t('Perimeter'),
-          ),
-
           'Spatial Operator' => array(
             '&&' => t('&&'),
             '&&&' => t('&&&'),
@@ -97,13 +88,37 @@
             '~=' => t('~='),
             ),
 
+          'Spatial Measurements' => array(
+          'ST_Area' => t('Area'), 
+          'ST_Azimuth' => t('Azimuth'),
+          'ST_Centroid' => t('Centroid'), 
+          'ST_HasArc' => t('HasArc'), 
+          'ST_Length' => t('Length'), 
+          'ST_Perimeter' => t('Perimeter'),
+          ),
+
         ),
         '#description' => t('This will be the way the relationship is determined.'),
         '#default_value' => $this->options['value']['operation'] ? $this->options['value']['operation'] : 'ST_Contains',
       );
 
+      $form['value']['comparison'] = array(
+        '#type' => 'select',
+        '#title' => t('Comparison Operators'),
+        '#options' => array(
+            ''  => t(''),
+            '=' => t('= (Equal)'),
+            '<' => t('< (Less than)'),
+            '>' => t('> (Greater than)'),
+            '<=' => t('<= (Less and Equal)'),
+            '>=' => t('>= (Greater and Equal)'),
+          ),
+        '#description' => t('Applicable only for Spatial Measurement Operation. <br />Query like: Area > 100, Leave blank if not applicable.'),
+        '#default_value' => t(''), 
+      );
+
       $nid_postgis_field_options_2 = array();
-      $nid_postgis_field_options_2[''] = 'Select';
+      $nid_postgis_field_options_2[''] = '';
       $fields = field_info_fields();
       foreach ($fields as $field) {
         if ($field['module'] == 'postgis') {
@@ -116,26 +131,35 @@
         '#title' => t('Existing PostGIS field'),
         '#options' => $nid_postgis_field_options_2,
         '#default_value' => $this->value['existing_postgis_field'],
-        '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.'),
+        '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.<br />Leave blank if not applicable.'),
       );
 
       $form['value']['geometry_B_wkt_data'] = array(
         '#type' => 'textarea',
-        '#title' => t('Geometry B'),
-        '#description' => t('Provide the geometry in WKT format.'),
-        '#default_value' => t('POLYGON((-176.17453 -54.28111,-176.17453 78.2186,179.19417 78.2186,179.19417 -54.28111,-176.17453 -54.28111))'),
+        '#title' => t('Geometry B or Numeric Input'),
+        '#description' => t('Provide the geometry in WKT format. Or numeric value for Spatial Measurements.'), 
+        '#default_value' => t(''),
       );
-    }
+    } 
 
 
     function query() {
 
       $operation = $this->options['value']['operation'];
       $geometry_B_wkt_data = $this->options['value']['geometry_B_wkt_data'];
+      $Comparator = $this->options['value']['comparison'];
 
       if (!in_array($this->options['value']['operation'], $this->operations)) {
         return;
       }
+
+      $Comparison_Operators = array(
+            '=',
+            '>',
+            '<',
+            '<=',
+            '>=',
+            );
       
       $Spatial_measurements_functions =  array(
           'ST_Area', 
@@ -202,20 +226,23 @@
       }
       else{
 
+        if (!in_array($Comparator, $Comparison_Operators)) {
+        return;
+        }
+
+        $numeric_data = (float)$geometry_B_wkt_data;
+
+        if(!is_numeric($numeric_data)){
+              return;
+        }
+
         $this->ensure_my_table();    
         $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
         $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
 
-        // Have to add new field here like ST_Area Example :
-        //SELECT ST_Area(Field_name)  
-        //FROM Table_name. 
-
-        // I think we have to used compile_fields or add_field function 
+        $measurement_query = $operation."(".$table_name.".".$field_name.") ".$Comparator. " ". $numeric_data ;
         
-        $measurement_query = $field_name; //'ST_Area(ST_SetSRID(:geom, 4326))';
-        $this->query->add_field($table_name, $measurement_query, $alias = 'Area', $params = array());
-
-        //$this->query->add_where_expression($this->options['group'], $measurement_query, $args = array(':geom' => $table_name.$field_name) );        
+        $this->query->add_where_expression($this->options['group'], $measurement_query, $args = array() );        
 
       }
     }
