@@ -5,9 +5,12 @@
 **Aim** - Implement the spatial filter functions for the module.
 
 **Things, I have done this week**
-* Completed the query for **Spatial Measurement**.
-* Added comparison operators to query support. 
-* Added numeric input data support with Geometry B text area.  
+* Completed the query for **Spatial Measurements**.
+* Added comparison operators to support measurement query. 
+* Added numeric data input with Geometry B text area.
+
+**Comments**
+* Faced error when I enable users to expose the filter module. Which is probably due to unset variable, will try to fix it ASAP.  
 
 **Mentor Suggestions**
 * Look into [node_load_multiple] (https://api.drupal.org/api/drupal/modules%21node%21node.module/function/node_load_multiple/7) function to get the list of all node ids. 
