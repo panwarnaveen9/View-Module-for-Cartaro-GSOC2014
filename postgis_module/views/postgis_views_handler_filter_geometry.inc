@@ -133,6 +133,22 @@
         '#default_value' => $this->value['existing_postgis_field'],
         '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.<br />Leave blank if not applicable.'),
       );
+      
+
+      $list_of_nids = array();
+      $list_of_nids[''] = '';
+      $nodes =  entity_load( 'field_data_field_location', $ids = FALSE, $conditions = array(), $reset = FALSE);
+      foreach($nodes as $products){
+        $list_of_nids[$products->nid] = $products->title; 
+      }
+      
+      $form['value']['existing_postgis_field_nid'] = array(
+        '#type' => 'select',
+        '#title' => t('Select Node'),
+        '#options' => $list_of_nids,
+        '#default_value' => '',
+        '#description' => t('Select node for spatial operations.<br />Leave blank if not applicable.'),
+      );
 
       $form['value']['geometry_B_wkt_data'] = array(
         '#type' => 'textarea',
