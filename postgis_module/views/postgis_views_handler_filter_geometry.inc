@@ -18,6 +18,8 @@
       '&&', '&&&', '&<', '&<|', '&>', '<<', '<<|', '=', '>>', '@', '|&>', '|>>', '~', '~=',
       );
 
+    var $all_postgis_fields_nids = array();
+    
     function option_definition() {
 
       $options = parent::option_definition();
@@ -134,20 +136,27 @@
         '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.<br />Leave blank if not applicable.'),
       );
       
-
-      $list_of_nids = array();
-      $list_of_nids[''] = '';
-      $nodes =  entity_load( 'field_data_field_location', $ids = FALSE, $conditions = array(), $reset = FALSE);
-      foreach($nodes as $products){
-        $list_of_nids[$products->nid] = $products->title; 
+      $this->all_postgis_fields_nids[''] = '';
+      $fields = field_info_fields();
+      foreach ($fields as $field) {
+        if ($field['module'] == 'postgis') {
+          $query = new EntityFieldQuery();
+          $entities = $query->entityCondition('entity_type', 'node')->fieldCondition($field['field_name'])->execute();
+          $list_of_nids = array();
+          $nodes = entity_load('node', array_keys($entities['node']));
+          foreach($nodes as $products){
+            $list_of_nids[$products->nid] = $products->title; 
+          }
+          $this->all_postgis_fields_nids[$field['field_name']] = $list_of_nids;
+        }
       }
-      
+
       $form['value']['existing_postgis_field_nid'] = array(
         '#type' => 'select',
         '#title' => t('Select Node'),
-        '#options' => $list_of_nids,
+        '#options' => $this->all_postgis_fields_nids,
         '#default_value' => '',
-        '#description' => t('Select node for spatial operations.<br />Leave blank if not applicable.'),
+        '#description' => t('Select node for spatial operations. Leave blank if not applicable.'),
       );
 
       $form['value']['geometry_B_wkt_data'] = array(
@@ -225,18 +234,35 @@
             $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
             $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
 
+            $existing_postgis_field_nid = $this->options['value']['existing_postgis_field_nid'];
+
+            $fields = field_info_fields();
+            $list_of_postgis_fields = array();
+            foreach ($fields as $field) {
+              if ($field['module'] == 'postgis') {
+                array_push($list_of_postgis_fields, $field['field_name']);
+              }
+            }
+
+            if(!in_array($this->options['value']['existing_postgis_field'], $list_of_postgis_fields)){
+              return;
+            }
+
+            // if(!in_array($this->options['value']['existing_postgis_field_nid'], $this->all_postgis_fields_nids[$this->options['value']['existing_postgis_field']])){
+            //   return;
+            // }
+
             $field_name_2 = db_escape_table($this->options['value']['existing_postgis_field'] . '_geometry');
             $table_name_2 = db_escape_table('field_data_' . $this->options['value']['existing_postgis_field']);
-
             $this->query->add_table($table_name_2, $relationship = NULL, $join = NULL, $alias = NULL);
-            
+
             if (!in_array($operation, $Spatial_operators)) {
-              $geometry_where = "$operation($table_name_2.$field_name_2, $table_name.$field_name)";
-              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array() );
+              $geometry_where = "$operation( ( select $field_name_2 from $table_name_2 where entity_id=:nid) , $table_name.$field_name)";
+              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':nid' => $existing_postgis_field_nid) );
             }
             else{
-              $operator_where = ":wkt $operation $table_name.$field_name"; 
-              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $table_name_2.'.'.$field_name_2) );
+              $operator_where = "( select $field_name_2 from $table_name_2 where entity_id=:nid) $operation $table_name.$field_name"; 
+              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':nid' => $existing_postgis_field_nid) );
             }
           }
       }
