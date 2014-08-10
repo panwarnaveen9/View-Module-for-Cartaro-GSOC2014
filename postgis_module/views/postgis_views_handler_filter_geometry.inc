@@ -30,7 +30,6 @@
           'nid_postgis_field' => '',
           'operation' => '',
           'comparison' => '',
-          'existing_postgis_field' => '',
           'existing_postgis_field_nid' => '',
           'geometry_B_wkt_data' => '',
         ),
@@ -129,22 +128,13 @@
         '#description' => t('Applicable only for Spatial Measurement Operation. <br />Query like: Area > 100, Leave blank if not applicable.'),
         '#default_value' => t(''), 
       );
-
-      $existing_postgis_field_options = array_merge(array('' => ''), $nid_postgis_field_options);
-      $form['value']['existing_postgis_field'] = array(
-        '#type' => 'select',
-        '#title' => t('Existing PostGIS field'),
-        '#options' => $existing_postgis_field_options,
-        '#default_value' => $this->value['existing_postgis_field'],
-        '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.<br />Leave blank if not applicable.'),
-      );
       
       $form['value']['existing_postgis_field_nid'] = array(
         '#type' => 'select',
-        '#title' => t('Select Node'),
+        '#title' => t('Select Node from existing PostGIS field'),
         '#options' => $this->all_postgis_fields_nids,
         '#default_value' => '',
-        '#description' => t('Select node for spatial operations. Leave blank if not applicable.'),
+        '#description' => t('Select node for spatial relations or operators. Leave blank if not applicable.'),
       );
 
       $form['value']['geometry_B_wkt_data'] = array(
@@ -187,8 +177,8 @@
 
       if(!in_array($operation, $Spatial_measurements_functions)){
         // Check whether the geometry field is empty or not.
-          $existing_postgis_field = $this->options['value']['existing_postgis_field'];
-          if($existing_postgis_field=='')
+          $existing_postgis_field_nid = $this->options['value']['existing_postgis_field_nid'];
+          if($existing_postgis_field_nid=='')
           {  
             if(empty($geometry_B_wkt_data)){
               return;
@@ -224,23 +214,34 @@
             $existing_postgis_field_nid = $this->options['value']['existing_postgis_field_nid'];
 
             $fields = field_info_fields();
-            $list_of_postgis_fields = array();
+            $postgis_field_name  = '';
+            $nid_found_flag = 0;
             foreach ($fields as $field) {
               if ($field['module'] == 'postgis') {
                 array_push($list_of_postgis_fields, $field['field_name']);
+                $query = new EntityFieldQuery();
+                $entities = $query->entityCondition('entity_type', 'node')->fieldCondition($field['field_name'])->execute();
+                $list_of_nids = array();
+                $nodes = entity_load('node', array_keys($entities['node']));
+                foreach($nodes as $single_node){
+                  if($single_node->nid == $existing_postgis_field_nid)
+                  {
+                    $nid_found_flag = 1;
+                    $postgis_field_name = $field['field_name'] ;
+                    break;
+                  }
+                }
+                if($nid_found_flag == 1)
+                  break;
               }
             }
 
-            if(!in_array($this->options['value']['existing_postgis_field'], $list_of_postgis_fields)){
+            if($nid_found_flag == 0)
               return;
-            }
 
-            // if(!in_array($this->options['value']['existing_postgis_field_nid'], $this->all_postgis_fields_nids[$this->options['value']['existing_postgis_field']])){
-            //   return;
-            // }
+            $field_name_2 = db_escape_table($postgis_field_name . '_geometry');
+            $table_name_2 = db_escape_table('field_data_' . $postgis_field_name);
 
-            $field_name_2 = db_escape_table($this->options['value']['existing_postgis_field'] . '_geometry');
-            $table_name_2 = db_escape_table('field_data_' . $this->options['value']['existing_postgis_field']);
             $this->query->add_table($table_name_2, $relationship = NULL, $join = NULL, $alias = NULL);
 
             if (!in_array($operation, $Spatial_operators)) {
@@ -281,7 +282,6 @@
       
       $this->options['value']['nid_postgis_field'] = $input['nid_postgis_field'];
       $this->options['value']['operation'] = $input['operation'];
-      $this->options['value']['existing_postgis_field'] = $input['existing_postgis_field'];
       $this->options['value']['existing_postgis_field_nid'] = $input['existing_postgis_field_nid'];
       $this->options['value']['geometry_B_wkt_data'] = $input['geometry_B_wkt_data'];
       $this->options['value']['comparison'] = $input['comparison'];
