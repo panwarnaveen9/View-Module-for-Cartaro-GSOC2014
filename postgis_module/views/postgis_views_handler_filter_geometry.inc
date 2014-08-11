@@ -32,17 +32,25 @@
           'geometry_B_wkt_data' => '',
         ),
       );
-
       return $options;
     }
 
     function value_form(&$form, &$form_state) {
 
+      $this->all_postgis_fields_nids[''] = '';
       $nid_postgis_field_options = array();
       $fields = field_info_fields();
       foreach ($fields as $field) {
         if ($field['module'] == 'postgis') {
           $nid_postgis_field_options[$field['field_name']] = $field['field_name'];
+          $query = new EntityFieldQuery();
+          $entities = $query->entityCondition('entity_type', 'node')->fieldCondition($field['field_name'])->execute();
+          $list_of_nids = array();
+          $nodes = entity_load('node', array_keys($entities['node']));
+          foreach($nodes as $single_node){
+            $list_of_nids[$single_node->nid] = $single_node->title; 
+          }
+          $this->all_postgis_fields_nids[$field['field_name']] = $list_of_nids;
         }
       }
 
@@ -119,38 +127,15 @@
         '#default_value' => t(''), 
       );
 
-      $nid_postgis_field_options_2 = array();
-      $nid_postgis_field_options_2[''] = '';
-      $fields = field_info_fields();
-      foreach ($fields as $field) {
-        if ($field['module'] == 'postgis') {
-          $nid_postgis_field_options_2[$field['field_name']] = $field['field_name'];
-        }
-      }
-
+      $existing_postgis_field_options = array_merge(array('' => ''), $nid_postgis_field_options);
       $form['value']['existing_postgis_field'] = array(
         '#type' => 'select',
         '#title' => t('Existing PostGIS field'),
-        '#options' => $nid_postgis_field_options_2,
+        '#options' => $existing_postgis_field_options,
         '#default_value' => $this->value['existing_postgis_field'],
         '#description' => t('Select which of the node\'s PostGIS field to use as the geometry B.<br />Leave blank if not applicable.'),
       );
       
-      $this->all_postgis_fields_nids[''] = '';
-      $fields = field_info_fields();
-      foreach ($fields as $field) {
-        if ($field['module'] == 'postgis') {
-          $query = new EntityFieldQuery();
-          $entities = $query->entityCondition('entity_type', 'node')->fieldCondition($field['field_name'])->execute();
-          $list_of_nids = array();
-          $nodes = entity_load('node', array_keys($entities['node']));
-          foreach($nodes as $products){
-            $list_of_nids[$products->nid] = $products->title; 
-          }
-          $this->all_postgis_fields_nids[$field['field_name']] = $list_of_nids;
-        }
-      }
-
       $form['value']['existing_postgis_field_nid'] = array(
         '#type' => 'select',
         '#title' => t('Select Node'),
@@ -233,7 +218,6 @@
             $this->ensure_my_table();    
             $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
             $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
-
             $existing_postgis_field_nid = $this->options['value']['existing_postgis_field_nid'];
 
             $fields = field_info_fields();
@@ -273,7 +257,6 @@
         }
 
         $numeric_data = (float)$geometry_B_wkt_data;
-
         if(!is_numeric($numeric_data)){
               return;
         }
@@ -282,10 +265,8 @@
         $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
         $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
 
-        $measurement_query = $operation."(".$table_name.".".$field_name.") ".$Comparator. " ". $numeric_data ;
-        
+        $measurement_query = $operation."(".$table_name.".".$field_name.") ".$Comparator. " ". $numeric_data ;       
         $this->query->add_where_expression($this->options['group'], $measurement_query, $args = array() );        
-
       }
     }
 
