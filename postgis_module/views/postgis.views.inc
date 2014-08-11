@@ -18,6 +18,8 @@ function postgis_field_views_data($field) {
   foreach ($data as $table_name => $table_data) {
     if (isset($table_data[$field_name])) {
       $data[$table_name][$field_name]['filter']['handler'] = 'postgis_views_handler_filter_geometry';
+      // $data[$table_name][$field_name]['exposed'] = TRUE;
+      // $data[$table_name][$field_name]['expose']['identifier'] = $field_name;
     }
   }
   return $data;

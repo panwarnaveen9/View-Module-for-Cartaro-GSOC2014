@@ -24,14 +24,17 @@
 
       $options = parent::option_definition();
       $options['operation'] = array('default' => 'ST_Contains');
-      $options['origin'] = array('default' => 'nid_arg');
+      $options['origin'] = array('default' => 'nid_postgis_field');
       $options['value'] = array(
         'default' => array(
-          'nid_arg' => '',
           'nid_postgis_field' => '',
+          'operation' => '',
+          'comparison' => '',
+          'existing_postgis_field' => '',
+          'existing_postgis_field_nid' => '',
           'geometry_B_wkt_data' => '',
         ),
-      );
+      ); 
       return $options;
     }
 
@@ -269,6 +272,22 @@
         $this->query->add_where_expression($this->options['group'], $measurement_query, $args = array() );        
       }
     }
+
+    function accept_exposed_input($input) {
+
+      if (!(isset($this->options['expose']) && isset($this->options['expose']['identifier']))) {
+        return FALSE;
+      }
+      
+      $this->options['value']['nid_postgis_field'] = $input['nid_postgis_field'];
+      $this->options['value']['operation'] = $input['operation'];
+      $this->options['value']['existing_postgis_field'] = $input['existing_postgis_field'];
+      $this->options['value']['existing_postgis_field_nid'] = $input['existing_postgis_field_nid'];
+      $this->options['value']['geometry_B_wkt_data'] = $input['geometry_B_wkt_data'];
+      $this->options['value']['comparison'] = $input['comparison'];
+
+      return TRUE;
+  }
 
     function check_wkt_data($geometry_B_wkt_data){
       // function description will be added soon.
