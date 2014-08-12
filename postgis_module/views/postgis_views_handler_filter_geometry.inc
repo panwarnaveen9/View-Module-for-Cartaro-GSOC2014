@@ -194,16 +194,31 @@
             $field_name = db_escape_table($this->options['value']['nid_postgis_field'] . '_geometry');
             $table_name = db_escape_table('field_data_' . $this->options['value']['nid_postgis_field']);
 
-            $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
-            $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
-            
-            if (!in_array($operation, $Spatial_operators)) {
-              $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
-              $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+            if(stripos($geometry_B_wkt_data, "SRID") === 0){
+              $validation_where = "ST_IsValid(ST_GeomFromEWKT(:wkt))";
+              $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              
+              if (!in_array($operation, $Spatial_operators)) {
+                $geometry_where = "$operation(ST_GeomFromEWKT(:wkt), $table_name.$field_name)";
+                $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              }
+              else{
+                $operator_where = "ST_GeomFromEWKT(:wkt) $operation $table_name.$field_name";
+                $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              }
             }
             else{
-              $operator_where = "ST_SetSRID(:wkt,4326) $operation $table_name.$field_name";
-              $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              $validation_where = "ST_IsValid(ST_SetSRID(:wkt,4326))";
+              $this->query->add_where_expression($this->options['group'], $validation_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              
+              if (!in_array($operation, $Spatial_operators)) {
+                $geometry_where = "$operation(ST_SetSRID(:wkt,4326), $table_name.$field_name)";
+                $this->query->add_where_expression($this->options['group'], $geometry_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              }
+              else{
+                $operator_where = "ST_SetSRID(:wkt,4326) $operation $table_name.$field_name";
+                $this->query->add_where_expression($this->options['group'], $operator_where, $args = array(':wkt' => $geometry_B_wkt_data) );
+              }
             }
           }
           else
