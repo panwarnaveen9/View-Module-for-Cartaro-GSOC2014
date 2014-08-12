@@ -57,11 +57,11 @@
       }
 
       $form['value']['nid_postgis_field'] = array(
-        '#type' => 'select',
+        '#type' => 'textfield',
         '#title' => t('PostGIS field'),
-        '#options' => $nid_postgis_field_options,
-        '#default_value' => $this->value['nid_postgis_field'],
+        '#default_value' => $this->definition['field_name'],
         '#description' => t('Select which of the node\'s PostGIS field to use as the origin.'),
+        '#disabled' => TRUE,
       );
 
       $form['value']['operation'] = array(
@@ -218,7 +218,6 @@
             $nid_found_flag = 0;
             foreach ($fields as $field) {
               if ($field['module'] == 'postgis') {
-                array_push($list_of_postgis_fields, $field['field_name']);
                 $query = new EntityFieldQuery();
                 $entities = $query->entityCondition('entity_type', 'node')->fieldCondition($field['field_name'])->execute();
                 $list_of_nids = array();
