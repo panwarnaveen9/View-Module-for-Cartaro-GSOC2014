@@ -290,4 +290,14 @@ class postgis_views_handler_filter_geometry extends views_handler_filter {
     $pass_fail_flag=0;
     return 1; // on Success return 1; 
   }
+
+  function admin_summary() {
+
+    if (!empty($this->options['exposed'])) {
+      return t('exposed');
+    }
+    
+    $output = t('Filter is applied on @operator operator.', array('@operator' => $this->options['value']['operation'])) ;
+    return $output;
+  }
 }
