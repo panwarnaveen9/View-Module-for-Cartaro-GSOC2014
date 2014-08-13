@@ -15,12 +15,13 @@
 * Removed dependency of repetitive selection of geometric node by setting the PostGIS field to already selected value. No need of it as dropdown.
 
 
-
 **Things to do next week**
-* 
+* GSoC documentation and code commenting.
+* Prepare the final report with User Guide. 
 
 **Reference Modules/Files** - 
-*
+* [Documentation Standards](https://www.drupal.org/node/1354)
+* [Coding Standards](https://www.drupal.org/coding-standards)
 
 **Am I blocked on anything ?**
 
