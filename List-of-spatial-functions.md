@@ -90,3 +90,10 @@
  * ST_AsText 
  * ST_AsLatLonText `For points only`
 
+* **Spatial Measurements**
+ * ST_Area
+ * ST_Azimuth
+ * ST_Centroid
+ * ST_HasArc
+ * ST_Length
+ * ST_Perimeter
