@@ -4,7 +4,6 @@
 Our aim was to provide views integration for PostGIS module in cartaro, which implements spatial query filter on geometry data.<br /> 
 We successfully fulfilled the above the goal in current **integration of views in PostGIS module**.<br /> 
 
-<br />
 ### Outcomes
 * User can apply spatial filter on following functions.
   * Spatial Relationships
@@ -15,7 +14,6 @@ We successfully fulfilled the above the goal in current **integration of views i
   * Select of already existing PostGIS field.
 * **[List of functions](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/wiki/List-of-spatial-functions) which user can exposed.** Current implementation support only Type 1-A and Type 2 functions.  
 
-<br />
 ### Work Experience
 <p>It was a great experience for me. I have learned about technology as well as open source development.</p> 
 * **Things, I have learned**
