@@ -41,16 +41,6 @@
   * ~ 
  * ~= 
 
-### Type 1-B 
-
-`Take same inputs as Type 1-A but returned geometry`
-
-* **Geometry Processing** 
- * ST_Intersection
- * ST_Union
- * ST_Split
- * ST_Difference
- * ST_SharedPaths
 
 `We will be focusing more on filter functions. Also we are considering the other means of geometry input for geometry B. For example, using the geometry from other nodes as input. So as of now we are providing the filter functionality for followings functions thus we can modified the query as follow.`
 
@@ -79,11 +69,24 @@
  * ST_HasArc
  * ST_Length
  * ST_Perimeter
+<br />
+<br />
+
+## [Future Work](#Feature Work)
+
+### Type 1-B 
+
+`Take same inputs as Type 1-A but returned geometry`
+
+* **Geometry Processing** 
+ * ST_Intersection
+ * ST_Union
+ * ST_Split
+ * ST_Difference
+ * ST_SharedPaths
 
 * **Spatial Outputs**
  * ST_AsEWKT
  * ST_AsText 
  * ST_AsLatLonText `For points only`
-
-
 
