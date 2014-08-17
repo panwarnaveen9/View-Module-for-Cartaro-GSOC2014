@@ -43,7 +43,7 @@ We successfully fulfilled the above the goal in current **integration of views i
 There are two major area where this project has great opportunity of development.
 
 1. **Users' Input** - In current implementation users need to provide geometry in **WKT/EWKT** format.<br />Which can be improve as follow -  
-  * **Geometry interface** - By providing a interactive map/interface to users where they can draw the geometry so we can store this geometry temporarily in PostGIS and apply the spatial function on it.  
+  * **Geometry interface** - By providing a interactive map / interface to users where they can draw the geometry so we can store this geometry temporarily in PostGIS and apply the spatial function on it.  
   * **Geometry files** - Instead of providing the geometry as input, user can upload the shape file(.shp) or GML file(.gml). And we extract geometry from these files to process the query. 
 
 2. **Derived geometry or additional field** - In current implementation we only provide the filter functionality on geometries. But we can provide more information based on users' need like - 
