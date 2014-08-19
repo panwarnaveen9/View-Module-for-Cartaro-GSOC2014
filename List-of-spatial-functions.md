@@ -1,3 +1,7 @@
+Description of following PostGIS functions is available on [official manual page](http://postgis.net/docs/manual-2.0/reference.html). <br />Please refer to this page if you have any confusion related to input/output format and functional behavior of these functions.
+<br />
+<br />
+
 ### Type 1-A
 
 **Input type -** function_name(geometry A, geometry B)
