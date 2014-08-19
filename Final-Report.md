@@ -59,7 +59,7 @@ There are two major area where this project has great opportunity of development
 
 ### Important Files 
 * **postgis/views/**
-  * [`postgis.views.inc`](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/postgis_module/views/postgis.views.inc) - Set custom filter handler for PostGISare fields.
+  * [`postgis.views.inc`](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/postgis_module/views/postgis.views.inc) - Set custom filter handler for PostGIS fields.
   * [`postgis_views_handler_filter_geometry.inc`](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/postgis_module/views/postgis_views_handler_filter_geometry.inc) -  A handler to provide filter for geospatial data.
 * **postgis/includes/**
   * [`postgis.geometry.inc`](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/blob/master/postgis_module/includes/postgis.geometry.inc) - PostGIS geometry class. 
