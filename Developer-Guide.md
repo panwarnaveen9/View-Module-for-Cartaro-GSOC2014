@@ -43,3 +43,10 @@ Here we are applying spatial filter, whether users' input geometry contain the g
 
   2. It is recommended that we should ensure the tables before executing the query.<br /><br />
 `$this->ensure_my_table();`
+
+
+### Other important functions 
+
+* **function option_definition()** - Use to setup all default options like: required, identifier, operator etc..
+
+* **function admin_summary()** - Use to customize admin information regarding the filter. Whether filter is expose to user or not, if no then what are all the parameter admin has set during creation of filter.
