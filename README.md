@@ -1,5 +1,5 @@
-**Cartaro GSoC-2014** : Add PostGIS spatial query support for the views Cartaro<br />
-**Student** : Naveen Panwar <panwarnaveen9@gmail.com><br />
+**Cartaro GSoC-2014** : Add PostGIS spatial query support for the views Cartaro<br /><br />
+**Student** : Naveen Panwar <panwarnaveen9@gmail.com><br /><br />
 **Mentors** : Friedjoff Trautwein <friedjoff.trautwein@geops.de>, Nico Mandery <nico.mandery@geops.de>
 
 The idea is to design and implement a PostGIS module with views integration, which should implement a Relationship plugin and a Filter plugin. The Relationship plugin would provide the ability to build spatial relationships between entities. The Filter plugin would make spatial filters available that can optionally be exposed to visitors. This would allow to do queries like `show me all features within a certain region` or `show only features within a specified distance of feature X`.
