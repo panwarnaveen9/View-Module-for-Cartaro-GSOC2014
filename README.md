@@ -11,3 +11,5 @@ We can divide the idea into following three steps -
 **PostGIS query processing** : Perform the spatial queries using PostGIS module. To process the query we are going to PostGIS extension of PostgreSQL. The user inputs will be processed to create and execute a valid PostgreSQL query.
 
 **Result visualization** : Display results/outputs of the queries in PostGIS on the views module in Cartaro. This part will be implemented by using JavaScript and OpenLayers.
+
+[List of functions](https://github.com/panwarnaveen9/View-Module-for-Cartaro-GSOC2014/wiki/List-of-spatial-functions) supported in module.
